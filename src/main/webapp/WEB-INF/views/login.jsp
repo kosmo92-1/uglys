@@ -21,7 +21,7 @@
     <!-- fontawesome -->
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" crossorigin="anonymous" />
 
-    <title>로그인</title>
+    <title>UGLYS</title>
 </head>
 
 <body>
