@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><!doctype html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="utf-8">
@@ -17,19 +18,19 @@
         <h2 class="sr-only">사용후기 작성</h2>
         <div class="inner">
             <h3>사용후기 작성</h3>
-            <form action="insertReview.do" method="post" enctype="multipart/form-data" >
+            <form name="insertReview" action="insertReview.do" enctype="multipart/form-data" method="POST"  >
                 <!-- PC ver START -->
                 <table class="pc">
                     <tr>
                         <th>작성자</th>
                         <td class="input-group-sm"> 
-                            <input type="text" name="writer" class="form-control" value="${user.user_name }" readonly="readonly">
+                            <input type="text" id="writer" name="writer" class="form-control" value="${user.user_name }" readonly="readonly">
                         </td>
                     </tr>
                     <tr>
                         <th>제목</th>
                         <td class="input-group-sm">
-                            <input type="text" name="title" class="form-control">
+                            <input type="text" id="title" name="title" class="form-control">
                         </td>
                     </tr>
                     <tr>
