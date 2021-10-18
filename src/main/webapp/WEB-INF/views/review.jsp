@@ -19,7 +19,7 @@
 		<ol id="rev_use_ol">
 			<!-- 이미지 -->
 			<div class="text-img">
-				<img src="${pageContext.request.contextPath}/resources/img/review/1.jpeg" alt="">
+				<img src="/uglys/resources/${review.content_img }" alt="">
 			</div>
 			<!-- 게시글 -->
 			<div class="board">

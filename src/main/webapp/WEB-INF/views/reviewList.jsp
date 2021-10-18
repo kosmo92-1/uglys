@@ -64,7 +64,7 @@
 										
 								<a href="../../WEB-INF/views/review.html">
 								<button type="button" class="sit_use_li_title">
-								<img src="/uglys/resources/img/aa1.jpg" alt="" class="absolute w-full h-full object-cover"></div>
+								<img src="/uglys/resources/${reviewVO.content_img }" onerror="this.src='/uglys/resources/img/aa1.jpg'"alt="" class="absolute w-full h-full object-cover"></div>
 							</button>
 							<div class="flex-1 space-y-2">
 								<button type="button" class="sit_use_li_title">
