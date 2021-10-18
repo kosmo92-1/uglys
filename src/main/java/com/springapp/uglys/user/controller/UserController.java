@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.springapp.uglys.user.service.UserService;
 import com.springapp.uglys.user.vo.UserVO;
+import com.springapp.uglys.utils.DeleteFileUtils;
 import com.springapp.uglys.utils.UploadFileUtils;
 
 /**
@@ -89,7 +90,7 @@ public class UserController {
 	
 	// 회원가입 post
 	@RequestMapping(value = "/insertUser", method = RequestMethod.POST)
-	public String postInsertUser(UserVO vo,HttpServletRequest req, MultipartFile file) throws Exception {
+	public String postInsertUser(UserVO vo,HttpServletRequest req, MultipartFile file,HttpServletResponse response) throws Exception {
 		logger.info("post insert");
 		System.out.println("vo : "+vo.getUser_admin());
 		uploadPath = req.getSession().getServletContext().getRealPath("/resources");
@@ -108,6 +109,11 @@ public class UserController {
 		vo.setUser_img(".."+File.separator + "imgUpload" + ymdPath + File.separator + fileName);
 		System.out.println("setUser_img :"+vo.getUser_img());
 		service.insertUser(vo);
+		
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		out.println("<script>alert('가입을 환영합니다.');</script>");
+		out.flush();
 
 		return "login";
 
@@ -185,7 +191,7 @@ public class UserController {
 
 	// 탈퇴 완료
 	@RequestMapping(value="/userDelete", method = RequestMethod.POST)
-	public String userDelete(UserVO vo, HttpSession session, RedirectAttributes rttr) throws Exception{
+	public String userDelete(UserVO vo, HttpSession session, RedirectAttributes rttr,HttpServletRequest req) throws Exception{
 		
 		UserVO user = (UserVO) session.getAttribute("user");
 		String sessionPassword = user.getUser_password();
@@ -203,6 +209,8 @@ public class UserController {
 		// 
 		filePath+=vo.getUser_img().substring(2); 
 		System.out.println("이미지 파일 경로"+filePath);
+		
+		deleteFile.deleteFiles(filePath);
 
 		service.deleteUser(vo);
 		
