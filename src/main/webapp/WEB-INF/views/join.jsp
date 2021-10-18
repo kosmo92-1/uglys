@@ -32,7 +32,10 @@
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<title>회원가입</title>
+<!-- import JS -->
+<script src="${pageContext.request.contextPath}/resources/js/form.js"></script>
+
+<title>UGLYS</title>
 </head>
 
 <body>
