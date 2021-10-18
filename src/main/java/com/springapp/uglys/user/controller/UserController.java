@@ -196,6 +196,14 @@ public class UserController {
 			return "redirect:/user/userDeleteView";
 		}
 
+		//파일 삭제 
+		DeleteFileUtils deleteFile = new DeleteFileUtils(); //유저의 이미지 src를 받아온다. 
+		vo =service.selectUser(vo); //파일 경로를 입력하면 해당 파일을 삭제한다. 
+		String filePath =req.getSession().getServletContext().getRealPath("/resources");
+		// 
+		filePath+=vo.getUser_img().substring(2); 
+		System.out.println("이미지 파일 경로"+filePath);
+
 		service.deleteUser(vo);
 		
 		session.invalidate();
