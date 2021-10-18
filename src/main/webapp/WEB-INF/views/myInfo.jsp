@@ -182,7 +182,25 @@
                     <tr>
                         <th>프로필 사진</th>
                         <td>
-                            <input type="file" class="form-control" value="${user.user_img}">
+                           							<div class="form-group">
+		                    <label class="control-label col-md-2"><b>사진</b></label>
+		                    <div class="select_img img" ><img src="${user.user_img }"></div>
+		                        <input class="form-control" type="file" id="user_img" name="file">
+		                    <div class="col-md-6">
+		                        <input type="hidden" id="userImage" name="userImage" required="required">
+		                    </div>
+               				</div>
+        					<script>
+								  $("#user_img").change(function(){
+								   if(this.files && this.files[0]) {
+								    var reader = new FileReader;
+								    reader.onload = function(data) {
+								     $(".select_img img").attr("src", data.target.result).width(100);        
+								    }
+								    reader.readAsDataURL(this.files[0]);
+								   }
+								  });
+					 		</script>
                         </td>
                     </tr>
                     <caption><b>*</b> 표시는 필수 항목 입니다.</caption>

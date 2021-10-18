@@ -29,6 +29,8 @@
 <link rel="stylesheet"
 	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
 	crossorigin="anonymous" />
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <title>회원가입</title>
 </head>
@@ -114,13 +116,33 @@
 					</tr>
 					<tr>
 						<th>프로필 사진</th>
-						<td><input type="file" id="user_img" name="file"
-							class="form-control"></td>
+						<td>
+							<div class="form-group">
+		                    <label class="control-label col-md-2"><b>사진</b></label>
+		                    <div class="select_img img" ><img src=""></div>
+		                        <input class="form-control" type="file" id="user_img" name="file">
+		                    <div class="col-md-6">
+		                        <input type="hidden" id="userImage" name="userImage" required="required">
+		                    </div>
+               				</div>
+        					<script>
+								  $("#user_img").change(function(){
+								   if(this.files && this.files[0]) {
+								    var reader = new FileReader;
+								    reader.onload = function(data) {
+								     $(".select_img img").attr("src", data.target.result).width(100);        
+								    }
+								    reader.readAsDataURL(this.files[0]);
+								   }
+								  });
+					 		</script>
+                		</td>
 					</tr>
 					<caption id="test">
 						<b>*</b> 표시는 필수 항목 입니다.
 					</caption>
 				</table>
+		
 				<!-- PC ver START -->
 
 				<!-- Mobile ver START-->
@@ -198,7 +220,7 @@
 		<jsp:include page="module/footer.jsp" />
 	</div>
 
-	<!--  <script type="text/javascript">
+	 <script type="text/javascript">
 
 
         // 우편번호 찾기 찾기 화면을 넣을 element
@@ -285,7 +307,7 @@
             // iframe을 넣은 element를 보이게 한다.
             element_wrap.style.display = "block";
         }
-    </script> -->
+    </script>
 
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
 		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
