@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -33,8 +34,11 @@
             </figure>
             <form action="login" method="post">
                 <div class="inputs input-group">
-                    <input type="text" class="form-control" name="user_id" placeholder="아이디">
-                    <input type="password" class="form-control" name="user_password" placeholder="비밀번호">
+                    <input type="text" class="form-control" name="user_id" placeholder="아이디" required="required">
+                    <input type="password" class="form-control" name="user_password" placeholder="비밀번호" required="required">
+                    <c:if test="${fail eq false}">
+                    	<p>아이디나 비밀번호를 확인하세요</p>
+                    </c:if>
                 </div>
                 <div class="d-grid">
                     <button type="submit" class="btn btn-green">로그인</button>
