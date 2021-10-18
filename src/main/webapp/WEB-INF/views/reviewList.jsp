@@ -60,10 +60,16 @@
 				<div class="flex justify-between pb-4">
 						</div>
 						<div class="flex space-x-4">
+							<div class="relative rounded-md h-24 w-24">
+										
+								<a href="../../WEB-INF/views/review.html">
+								<button type="button" class="sit_use_li_title">
+								<img src="/uglys/resources/img/aa1.jpg" alt="" class="absolute w-full h-full object-cover"></div>
+							</button>
 							<div class="flex-1 space-y-2">
 								<button type="button" class="sit_use_li_title">
 								<c:forEach items="${reviewList}" var="reviewVO">
-								<td><img src="/uglys/resources/${reviewVO.content_img }" alt="" class="absolute w-full h-full object-cover" width="100">
+								<td><img src="${reviewVO.content_img }" alt="" width="100"class="absolute w-full h-full object-cover">
 								<a href="getReview.do?pageNum=${pageMaker.cri.pageNum}
 									  	 &amount=10&reviewNum=${reviewVO.reviewNum}
 										 &searchCondition=${param.searchCondition}
