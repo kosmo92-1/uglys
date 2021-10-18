@@ -46,13 +46,15 @@ public class UserController {
 	
 	// 로그인
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(UserVO vo, HttpServletRequest req, RedirectAttributes rttr) throws Exception{
+	public String login(UserVO vo, HttpServletRequest req, RedirectAttributes rttr,HttpServletResponse res) throws Exception{
+		
 		System.out.println("UserController.login");
 		logger.info("login");
 		HttpSession session = req.getSession();
 		UserVO login = service.login(vo);
 //		System.out.println("service.login(vo); :"+login.getUser_id());
 		
+		//로그인 실패시
 		if(login == null) {
 			session.setAttribute("user", null);
 			rttr.addFlashAttribute("fail", false);
