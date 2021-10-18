@@ -194,9 +194,10 @@
 				</div>
 			</form>
 		</div>
+		
+		<jsp:include page="module/footer.jsp" />
 	</div>
 
-	<jsp:include page="module/footer.jsp" />
 	<!--  <script type="text/javascript">
 
 

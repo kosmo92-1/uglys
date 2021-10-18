@@ -10,12 +10,12 @@
 	</h1>
 	<ul class="menu">
 		<li><a href="/uglys/review/getReviewList">후기게시판</a></li>
-		<li><a href="/uglys/user/userUpdateView">마이페이지</a></li>
 		<!-- 세션에 값이 없을때 -->
 		<c:if test="${empty user }">
 			<li><a href="/uglys/user/login">로그인</a></li>
 		</c:if>
 		<c:if test="${not empty user }">
+			<li><a href="/uglys/user/userUpdateView">마이페이지</a></li>
 			<li>${user.user_name }님환영합니다! <a href="/uglys/user/logout">로그아웃</a></li>
 		</c:if>
 	</ul>
