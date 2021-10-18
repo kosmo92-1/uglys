@@ -26,8 +26,9 @@
                         <td class="input-group-sm">
                             <input type="text" id="name" class="form-control" value="${user.user_name }">
                         </td>
-                        <tr>
-                            <th>휴대폰 번호</th>
+                    </tr>
+                    <tr>
+                        <th>휴대폰 번호</th>
                             <td class="input-group-sm">
                                 <input type="tel" id="phoneNum" maxlength="11" class="form-control" placeholder="01012341234">
                                 답변 등록 시 답변등록 알림이 SMS로 전송됩니다.
@@ -50,7 +51,8 @@
                     <tr>
                         <th>내용</th>
                         <td class="input-group-sm">
-                            <input type="text" id="content" class="form-control" style="width:100%;height:200px;font-size:30px;">
+                            <%-- <input type="text" id="content" class="form-control" style="width:100%;height:200px;font-size:30px;"> --%>
+                            <textarea style="width:100%;height:200px;font-size:30px"></textarea>
                         </td>
                     </tr>
                     <tr>

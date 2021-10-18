@@ -60,7 +60,7 @@
             </div>
         </div>
 
-        <!-- 탈퇴 모달 -->
+      <!-- 탈퇴 모달 -->
         <div class="modal fade" id="leaveModal" tabindex="-1" aria-labelledby="leaveModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -72,10 +72,14 @@
                         못난이들을 탈퇴하시겠습니까?
                     </div>
                     <form action="userDelete" method="post">
+                    <input type="text"name="user_id" value="${user.user_id }"><br>
                     <input type="password"name="user_password">
+                    <c:if test="${fail == false }">
+                		<p style="color: red;">비밀 번호를 확인해 주세요.</p>
+            		</c:if>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-dark" data-bs-dismiss="modal">취소</button>
-                      	<button type="submit" class="btn btn-green">탈퇴하기</button>
+                          <button type="submit" class="btn btn-green">탈퇴하기</button>
                     </div>
                     </form>
                 </div>
@@ -182,7 +186,25 @@
                     <tr>
                         <th>프로필 사진</th>
                         <td>
-                            <input type="file" class="form-control" value="${user.user_img}">
+                           							<div class="form-group">
+		                    <label class="control-label col-md-2"><b>사진</b></label>
+		                    <div class="select_img img" ><img src="${user.user_img }"></div>
+		                        <input class="form-control" type="file" id="user_img" name="file">
+		                    <div class="col-md-6">
+		                        <input type="hidden" id="userImage" name="userImage" required="required">
+		                    </div>
+               				</div>
+        					<script>
+								  $("#user_img").change(function(){
+								   if(this.files && this.files[0]) {
+								    var reader = new FileReader;
+								    reader.onload = function(data) {
+								     $(".select_img img").attr("src", data.target.result).width(100);        
+								    }
+								    reader.readAsDataURL(this.files[0]);
+								   }
+								  });
+					 		</script>
                         </td>
                     </tr>
                     <caption><b>*</b> 표시는 필수 항목 입니다.</caption>
