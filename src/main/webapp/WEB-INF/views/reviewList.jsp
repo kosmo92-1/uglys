@@ -32,28 +32,28 @@
 	<jsp:include page="module/header.jsp" />
 	<!--상품 검색 시작-->
 	<div class="s132">
-		<form>
+		<form action="getReviewList.do" method="post"> <!-- 10.18 검색 수정 -->
 			<div class="inner-form">
 				<div class="input-field first-wrap">
 					<div class="input-select">
-						<select data-trigger="" name="searchKeyword">
-							<option placeholder="">제목</option>
-							<option>내용</option>
+						<select data-trigger="" name="searchCondition"><!-- 10.18 name 수정 -->
+							<option value="TITLE">제목</option> <!-- 10.18 value 추가 -->
+							<option value="CONTENT">내용</option> <!-- 10.18 value 추가 -->
 						</select>
 					</div>
 				</div>
 				<div class="input-field second-wrap">
-					<input id="search" type="text" placeholder="Enter Keywords" />
+					<input id="search" name="searchKeyword" type="text" placeholder="Enter Keywords" /> <!-- 10.18 name 추가 -->
 				</div>
 				<div class="input-field third-wrap">
-					<button name="searchKeyword" class="btn-search" type="button">Search</button>
+					<button  class="btn-search" type="submit">Search</button> <!-- 10.18 submit 으로 변경 -->
 				</div>
 			</div>
 			<!--제목/내용-->
 			<script>
 				const choices = new Choices('[data-trigger]', {
 					searchEnabled : false,
-					itemSelectText : '',
+					itemSelectText : ''
 				});
 			</script>
 			<!--상품 검색 끝-->
@@ -96,16 +96,18 @@
 						</ol>
 					</section>
 					<!--상품 사용후기 끝-->
-					<!--페이징 시작-->
+					<!--페이징 시작--> <!-- 10.18  페이징  수정-->
 					<nav class="pg_wrap">
-						<span class="pg"><span class="sound_only">열린</span><strong
-							class="pg_current">1</strong><span class="sound_only">페이지</span>
-							<a href="#" class="pg_page">2</a><span class="sound_only"></span>
-							<a href="#" class="pg_page">3</a><span class="sound_only"></span>
-							<a href="#" class="pg_page">4</a><span class="sound_only"></span>
-							<a href="#" class="pg_page">5</a><span class="sound_only"></span>
-							<a href="" class="pg_page pg_next">></a> <a href=""
-							class="pg_page pg_end">>></a> </span>
+						<span class="pg"><span class="sound_only">열린</span>
+						<c:if test="${pageMaker.prev}">				<!-- 이전 페이지 -->
+							<a href="getReviewList.do?pageNum=${pageMaker.startPage -1}&amount=10" class="pg_page pg_next"> < </a>
+						</c:if> 
+						<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num"> <!-- 하단 페이징 -->
+							<a href="getReviewList.do?pageNum=${num}&amount=10&searchCondition=${searchCondition}&searchKeyword=${searchKeyword}" class="pg_page">${num}</a><span class="sound_only"></span>
+						</c:forEach>
+							<c:if test="${pageMaker.next}"> <!-- 다음 페이지 -->
+								<a href="getReviewList.do?pageNum=${pageMaker.endPage + 1}" class="pg_page pg_end">>></a> </span>
+							</c:if> 
 					</nav>
 					<!-- 페이징 끝-->
 					<!--사용후기 쓰기-->

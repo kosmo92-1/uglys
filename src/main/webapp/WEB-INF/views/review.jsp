@@ -25,9 +25,16 @@
 			<!-- 후기 시작 -->
 			<div id="rev_use_ol">
 				<!-- 이미지 -->
-				<div class="text-img">
-					<img src="/uglys/resources/${review.content_img }"  alt="">
-				</div>
+				<c:set var="content_img" value="${review.content_img }" />
+				<c:choose>
+				    <c:when test="${empty content_img}">
+				    	<!-- 기본이미지 넣어주세요 -->
+				        <img src="${pageContext.request.contextPath}/resources/img/review/#" alt="">
+				    </c:when>
+				    <c:otherwise>
+					    <img src="${review.content_img }" alt="" >
+				    </c:otherwise>
+				</c:choose>
 				<!-- 게시글 -->
 				<div class="board">
 					<!-- 글 제목 -->
@@ -46,12 +53,12 @@
 				</div>
 				<!-- 버튼 -->
 				<div id="rev_use_ol">
-					<div id="sit_use_wbtn01">
-						<a href="updateReview.do?reviewNum=${review.reviewNum }"
-							class="btn01">글 수정/삭제</a> <a href="getReviewList.do"
-							class="btn01">후기 목록</a>
-					</div>
-				</div>
+                	<div id="sit_use_wbtn01"><!-- 수정 / 삭제 버튼 링크 추가. user_id 와 writer가 같아야 뜸. -->
+               		<c:if test="${user.user_id == review.writer}">
+                  		<a href="updateReview.do?reviewNum=${review.reviewNum }" class="btn01">글 수정/삭제</a> 
+               		</c:if><!-- 글 목록 링크 추가 -->
+                  	<a href="getReviewList.do?pageNum=${param.pageNum}&amount=10&searchCondition=${param.searchCondition}&searchKeyword=${param.searchKeyword}" class="btn01">후기 목록</a>
+               </div>
 			</div>
 		</div>
 	</section>
