@@ -4,6 +4,16 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script> 
+	<script>	
+	$(document).ready(function(){ 
+		$("#submit").click(function(){
+				if($("#writer").val().length==0){ alert("작성자를 입력하세요."); $("#writer").focus(); return false; }
+				if($("#title").val().length==0){ alert("제목을 입력하세요."); $("#title").focus(); return false; }
+				if($("#content").val().length==0){ alert("내용을 입력하세요."); $("#content").focus(); return false; }
+			});		
+	});
+	</script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/reset.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/reviewInsert.css">
@@ -14,6 +24,8 @@
 <title>UGLYS</title>
 </head>
 <body>
+		<!-- HEADER -->
+		<jsp:include page="module/header.jsp" />
     <div class="wrapper">
         <h2 class="sr-only">사용후기 수정 및 삭제</h2>
         <div class="inner">
@@ -24,7 +36,7 @@
                     <tr>
                         <th>작성자</th>
                         <td class="input-group-sm">
-                            <input type="text" id="name" class="form-control" value="${review.writer}">
+                            <input type="text" id="writer" class="form-control" value="${review.writer}">
                         </td>
                     </tr>
                     <tr>
