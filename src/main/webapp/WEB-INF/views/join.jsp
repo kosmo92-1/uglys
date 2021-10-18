@@ -55,7 +55,7 @@
 						<td>
                             <div class="form-check-inline">
                                 <input type="radio" id="user" class="form-check-input"
-                                    name="user_admin" value="user" checked="checked"> <label
+                                    name="user_admin" value="user" checked> <label
                                     for="user" class="form-check-label"> 사용자 </label>
                             </div>
                             <div class="form-check-inline">
@@ -96,22 +96,22 @@
 					<tr>
 						<th>휴대폰 번호<b>*</b></th>
 						<td class="input-group-sm"><input type="tel" id="phoneNum"
-							class="form-control" placeholder=" - 를 빼고 입력해주세요"
+							class="form-control" placeholder="- 를 빼고 입력해주세요"
 							name="user_phone"></td>
 					</tr>
 					<tr>
 						<th>주소<b>*</b></th>
 						<td>
-							<div class="input-group-sm mb-2">
+							<div class="input-group mb-2">
 								<input class="form-control" type="text" id="user_Basic_Address"
-									name="user_basic_address" readonly="readonly" />
+									name="user_basic_address" readonly />
 								<button type="button" class="btn btn-sm btn-dark"
 									data-bs-toggle="modal" data-bs-target="#searchPost"
 									onclick="execDaumPostcode()">
 									<b>주소검색</b>
 								</button>
 							</div>
-							<div class="input-group-sm">
+							<div class="input-group">
 								<input type="text" id="user_Detail_Address"
 									name="user_detail_address" class="form-control">
 							</div>
@@ -125,7 +125,7 @@
 		                    <div class="select_img img" ><img src=""></div>
 		                        <input class="form-control" type="file" id="user_img" name="file">
 		                    <div class="col-md-6">
-		                        <input type="hidden" id="userImage" name="userImage" required="required">
+		                        <input type="hidden" id="userImage" name="userImage" required>
 		                    </div>
                				</div>
         					<script>
@@ -201,14 +201,14 @@
 						<div class="modal-content">
 							<div class="modal-header">
 								<h5 class="modal-title" id="searchPostLabel">주소검색</h5>
-								<button type="button" class="btn-close" data-bs-dismiss="modal"
+								<button type="button" id="modalClose" class="btn-close" data-bs-dismiss="modal"
 									aria-label="close"></button>
 							</div>
 							<div class="form-group" id="wrap"></div>
-							<div class="modal-footer">
+							<%-- <div class="modal-footer">
 								<button type="button" class="btn btn-secondary"
-									data-bs-dismiss="modal" id="modalClose">닫기</button>
-							</div>
+									data-bs-dismiss="modal" >닫기</button>
+							</div> --%>
 						</div>
 					</div>
 				</div>
