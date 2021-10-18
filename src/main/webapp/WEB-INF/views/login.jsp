@@ -32,7 +32,7 @@
             <figure>
                 <i class="fas fa-user"></i>
             </figure>
-            <form action="login" method="post">
+            <form action="/uglys/user/login" method="post">
                 <div class="inputs input-group">
                     <input type="text" class="form-control" name="user_id" placeholder="아이디" required="required">
                     <input type="password" class="form-control" name="user_password" placeholder="비밀번호" required="required">

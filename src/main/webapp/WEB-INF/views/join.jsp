@@ -29,6 +29,8 @@
 <link rel="stylesheet"
 	href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
 	crossorigin="anonymous" />
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- import JS -->
 <script src="${pageContext.request.contextPath}/resources/js/form.js"></script>
@@ -45,21 +47,23 @@
 		<h2 class="sr-only">회원가입 페이지</h2>
 		<div class="inner">
 			<h3>회원가입</h3>
-			<form action="">
+			<form action="insertUser" method="post" enctype="multipart/form-data">
 				<!-- PC ver START -->
 				<table class="pc">
 					<tr>
 						<th>타입<b>*</b></th>
 						<td>
-							<div class="form-check-inline">
-								<input type="radio" id="user" class="form-check-input" name="radio" value="user" checked>
-								<label for="user" class="form-check-label">사용자</label>
-							</div>
-							<div class="form-check-inline">
-								<input type="radio" id="admin" class="form-check-input"	name="radio" value="admin">
-								<label for="admin" class="form-check-label">관리자</label>
-							</div>
-						</td>
+                            <div class="form-check-inline">
+                                <input type="radio" id="user" class="form-check-input"
+                                    name="user_admin" value="user" checked="checked"> <label
+                                    for="user" class="form-check-label"> 사용자 </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <input type="radio" id="admin" class="form-check-input"
+                                    name="user_admin" value="admin"> <label for="admin"
+                                    class="form-check-label"> 관리자 </label>
+                            </div>
+                        </td>
 					</tr>
 					<tr>
 						<th>아이디<b>*</b></th>
@@ -98,97 +102,120 @@
 					<tr>
 						<th>주소<b>*</b></th>
 						<td>
-							<div class="input-group mb-2 d-flex">
-								<input class="form-control" type="text" id="address"
-									name="address" readonly>
-								<button type="button" class="btn btn-sm btn-secondary"
+							<div class="input-group-sm mb-2">
+								<input class="form-control" type="text" id="user_Basic_Address"
+									name="user_basic_address" readonly="readonly" />
+								<button type="button" class="btn btn-sm btn-dark"
 									data-bs-toggle="modal" data-bs-target="#searchPost"
 									onclick="execDaumPostcode()">
-									주소검색
+									<b>주소검색</b>
 								</button>
 							</div>
-							<div class="input-group">
-								<input type="text" id="address2"
-									name="address2" class="form-control">
+							<div class="input-group-sm">
+								<input type="text" id="user_Detail_Address"
+									name="user_detail_address" class="form-control">
 							</div>
 						</td>
 					</tr>
 					<tr>
 						<th>프로필 사진</th>
-						<td><input type="file" id="user_img" name="file"
-							class="form-control"></td>
+						<td>
+							<div class="form-group">
+		                    <label class="control-label col-md-2"><b>사진</b></label>
+		                    <div class="select_img img" ><img src=""></div>
+		                        <input class="form-control" type="file" id="user_img" name="file">
+		                    <div class="col-md-6">
+		                        <input type="hidden" id="userImage" name="userImage" required="required">
+		                    </div>
+               				</div>
+        					<script>
+								  $("#user_img").change(function(){
+								   if(this.files && this.files[0]) {
+								    var reader = new FileReader;
+								    reader.onload = function(data) {
+								     $(".select_img img").attr("src", data.target.result).width(100);        
+								    }
+								    reader.readAsDataURL(this.files[0]);
+								   }
+								  });
+					 		</script>
+                		</td>
 					</tr>
 					<caption id="test">
 						<b>*</b> 표시는 필수 항목 입니다.
 					</caption>
 				</table>
+		
 				<!-- PC ver START -->
 
 				<!-- Mobile ver START-->
-				<div class="mb">
+				<!--   <div class="mb">
                     <div class="toggle-box form-check form-switch mb-3">
-                        <input type="checkbox" class="form-check-input" role="switch" id="userType" name="radio">
+                        <input type="checkbox" class="form-check-input" role="switch" id="userType">
                         <label for="userType" class="label-toggle form-check-label">관리자로 가입하기</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" id="idMb" class="form-control" placeholder="아이디" name="user_id">
+                        <input type="text" id="idMb" class="form-control" placeholder="아이디">
                         <label for="idMb">아이디</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="password" id="passwordMb" class="form-control" placeholder="비밀번호" name="user_password">
+                        <input type="password" id="passwordMb" class="form-control" placeholder="비밀번호">
                         <label for="passwordMb">비밀번호</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="email" id="emailMb" class="form-control" placeholder="이메일" name="user_email">
+                        <input type="email" id="emailMb" class="form-control" placeholder="이메일">
                         <label for="emailMb">이메일</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" id="nameMb" class="form-control" placeholder="이름" name="user_name">
+                        <input type="text" id="nameMb" class="form-control" placeholder="이름">
                         <label for="nameMb">이름</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" id="birthdayMb" class="form-control" placeholder="생년월일" name="user_birth">
+                        <input type="text" id="birthdayMb" class="form-control" placeholder="생년월일">
                         <label for="birthdayMb">생년월일</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" id="phoneNumMb" class="form-control" placeholder="-를 제외하고 입력해주세요" name="user_phone">
+                        <input type="text" id="phoneNumMb" class="form-control" placeholder="-를 제외하고 입력해주세요">
                         <label for="phoneNumMb" >휴대폰 번호</label>
                     </div>
                     <div class="mb-3">
                         <div class="input-group mb-2">
                             <input type="text" id="user_Basic_Address-mb" class="form-control p-3" placeholder="주소"
-                                readonly>
-                            <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal"
-                                data-bs-target="#searchPost" onclick="execDaumPostcode()">주소검색</button>
+                                disabled="disabled">
+                            <label for="addressMb" class="sr-only">주소</label>
+                            <button type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal"
+                                data-bs-target="#searchPost" onclick="execDaumPostcode()"><b>검색</b></button>
                         </div>
                         <div class="input-group">
                             <input type="text" id="user_Detail_Address-mb" class="form-control p-3" placeholder="상세주소">
                             <label for="address2Mb" class="sr-only">상세주소</label>
                         </div>
                     </div>
-                </div> 
+                </div> -->
 				<!-- Mobile ver END-->
+
 				<!-- 주소검색 모달 -->
 				<div class="modal fade" id="searchPost" tabindex="-1"
 					aria-labelledby="searchPostLabel" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
-								<div class="modal-title" id="searchPostLabel">주소검색</div>
-								<button type="button" class="btn-close" data-bs-dismiss="modal" id="modalClose"
+								<h5 class="modal-title" id="searchPostLabel">주소검색</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal"
 									aria-label="close"></button>
 							</div>
-							<div class="form-group" id="modalWrap"></div>
-							<%-- <div class="modal-footer">
+							<div class="form-group" id="wrap"></div>
+							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary"
 									data-bs-dismiss="modal" id="modalClose">닫기</button>
-							</div> --%>
+							</div>
 						</div>
 					</div>
 				</div>
 				<!-- 모달 ends -->
+
 				<div class="text-center">
-					<button type="submit" id="btnSignUp" class="btn-join btn btn-lg btn-secondary">가입하기</button>
+					<button type="submit" class="btn-join btn btn-lg btn-secondary">가입하기</button>
 				</div>
 			</form>
 		</div>
@@ -196,23 +223,33 @@
 		<jsp:include page="module/footer.jsp" />
 	</div>
 
-	  <script type="text/javascript">
-        var element_wrap = document.getElementById("modalWrap");
+	 <script type="text/javascript">
+
+
+        // 우편번호 찾기 찾기 화면을 넣을 element
+        var element_wrap = document.getElementById("wrap");
 
         function foldDaumPostcode() {
+            // iframe을 넣은 element를 안보이게 한다.
             element_wrap.style.display = "none";
         }
 
         function execDaumPostcode() {
+            // 현재 scroll 위치를 저장해놓는다.
             var currentScroll = Math.max(
                 document.body.scrollTop,
                 document.documentElement.scrollTop
             );
             new daum.Postcode({
                 oncomplete: function (data) {
+                    // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                    // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                    // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
                     var addr = ""; // 주소 변수
                     var extraAddr = ""; // 참고항목 변수
 
+                    //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
                     if (data.userSelectedType === "R") {
                         // 사용자가 도로명 주소를 선택했을 경우
                         addr = data.roadAddress;
@@ -240,20 +277,20 @@
                             extraAddr = " (" + extraAddr + ")";
                         }
                         // 조합된 참고항목을 해당 필드에 넣는다.
-                        document.getElementById("address2").value =
+                        document.getElementById("user_Detail_Address").value =
                             extraAddr;
                     } else {
-                        document.getElementById("address").value = "";
+                        document.getElementById("user_Basic_Address").value = "";
                     }
 
                     // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                    document.getElementById("address").value =
+                    document.getElementById("user_Basic_Address").value =
                         data.zonecode + " " + addr;
                     document.getElementById("user_Basic_Address-mb").value =
                         data.zonecode + " " + addr;
                     // 커서를 상세주소 필드로 이동한다.
 
-                    document.getElementById("address2").focus();
+                    document.getElementById("user_Detail_Address").focus();
                     // iframe을 넣은 element를 안보이게 한다.
                     // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
                     element_wrap.style.display = "none";
@@ -270,6 +307,7 @@
                 height: "100%",
             }).embed(element_wrap);
 
+            // iframe을 넣은 element를 보이게 한다.
             element_wrap.style.display = "block";
         }
     </script>
@@ -283,6 +321,7 @@
 		crossorigin="anonymous"></script>
 	<script
 		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/myPage.js"></script>
 </body>
 
 </html>
