@@ -47,23 +47,23 @@
 		<h2 class="sr-only">회원가입 페이지</h2>
 		<div class="inner">
 			<h3>회원가입</h3>
-			<form action="">
+			<form action="insertUser" method="post" enctype="multipart/form-data">
 				<!-- PC ver START -->
 				<table class="pc">
 					<tr>
 						<th>타입<b>*</b></th>
 						<td>
-							<div class="form-check-inline">
-								<input type="radio" id="user" class="form-check-input"
-									name="radio" value="user" checked="checked"> <label
-									for="user" class="form-check-label"> 사용자 </label>
-							</div>
-							<div class="form-check-inline">
-								<input type="radio" id="admin" class="form-check-input"
-									name="radio" value="admin"> <label for="admin"
-									class="form-check-label"> 관리자 </label>
-							</div>
-						</td>
+                            <div class="form-check-inline">
+                                <input type="radio" id="user" class="form-check-input"
+                                    name="user_admin" value="user" checked="checked"> <label
+                                    for="user" class="form-check-label"> 사용자 </label>
+                            </div>
+                            <div class="form-check-inline">
+                                <input type="radio" id="admin" class="form-check-input"
+                                    name="user_admin" value="admin"> <label for="admin"
+                                    class="form-check-label"> 관리자 </label>
+                            </div>
+                        </td>
 					</tr>
 					<tr>
 						<th>아이디<b>*</b></th>
@@ -321,7 +321,7 @@
 		crossorigin="anonymous"></script>
 	<script
 		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	<script src="resources/js/myPage.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/myPage.js"></script>
 </body>
 
 </html>

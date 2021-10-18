@@ -9,7 +9,7 @@
 		</a>
 	</h1>
 	<ul class="menu">
-		<li><a href="/uglys/review/getReviewList">후기게시판</a></li>
+		<li><a href="/uglys/reviews/getReviewList">후기게시판</a></li>
 		<!-- 세션에 값이 없을때 -->
 		<c:if test="${empty user }">
 			<li><a href="/uglys/user/login">로그인</a></li>

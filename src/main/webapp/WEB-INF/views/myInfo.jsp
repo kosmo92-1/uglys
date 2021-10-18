@@ -60,7 +60,7 @@
             </div>
         </div>
 
-        <!-- 탈퇴 모달 -->
+      <!-- 탈퇴 모달 -->
         <div class="modal fade" id="leaveModal" tabindex="-1" aria-labelledby="leaveModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -72,10 +72,14 @@
                         못난이들을 탈퇴하시겠습니까?
                     </div>
                     <form action="userDelete" method="post">
+                    <input type="text"name="user_id" value="${user.user_id }"><br>
                     <input type="password"name="user_password">
+                    <c:if test="${fail == false }">
+                		<p style="color: red;">비밀 번호를 확인해 주세요.</p>
+            		</c:if>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-dark" data-bs-dismiss="modal">취소</button>
-                      	<button type="submit" class="btn btn-green">탈퇴하기</button>
+                          <button type="submit" class="btn btn-green">탈퇴하기</button>
                     </div>
                     </form>
                 </div>
