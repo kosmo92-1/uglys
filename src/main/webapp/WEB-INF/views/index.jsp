@@ -50,20 +50,11 @@
 						<a href="user/login" class="btn btn-green">시작하기</a>
 					</c:when>
 					<c:otherwise>
-						<button type="button" class="btn btn-green"
-						data-bs-toggle="modal" data-bs-target="#paymodule">시작하기
+						<button type="button" onclick="alert('결제모듈 미구현')" class="btn btn-green">시작하기
 						</button>
-								<div class="modal fade" id="paymodule">
-			          <div class="modal-dialog" >
-			            <div class="modal-content">
-			                <img src="${pageContext.request.contextPath}/resources/img/paymodule.jpg">
-			            </div><!-- /.modal-content -->
-			          </div><!-- /.modal-dialog -->
-			        </div><!-- /.modal -->
 					</c:otherwise>
 				</c:choose>
-			
-					
+				
 			</section>
 			<section class="sec-pros">
 				<div class="pros1">

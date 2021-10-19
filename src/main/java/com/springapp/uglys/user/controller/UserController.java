@@ -218,21 +218,20 @@ public class UserController {
 		String m_user_detail_address = req.getParameter("m_user_detail_address");
 		String m_user_img = req.getParameter("m_user_img");
 		System.out.println("모바일유저아이디" + m_user_id);
+		
 		// 모바일인 경우
-		if (!m_user_id.isEmpty()) {
-			System.out.println("if (!m_user_admin.isEmpty())");
-
-			vo.setUser_admin(m_user_admin);
-			vo.setUser_id(m_user_id);
-			vo.setUser_password(m_user_password);
-			vo.setUser_email(m_user_email);
-			vo.setUser_name(m_user_name);
-			vo.setUser_birth(m_user_birth);
-			vo.setUser_phone(m_user_phone);
-			vo.setUser_basic_address(m_user_basic_address);
-			vo.setUser_detail_address(m_user_detail_address);
-			vo.setUser_img(m_user_img);
-		}
+		/*
+		 * if (!m_user_id.isEmpty()) {
+		 * System.out.println("if (!m_user_admin.isEmpty())");
+		 * 
+		 * vo.setUser_admin(m_user_admin); vo.setUser_id(m_user_id);
+		 * vo.setUser_password(m_user_password); vo.setUser_email(m_user_email);
+		 * vo.setUser_name(m_user_name); vo.setUser_birth(m_user_birth);
+		 * vo.setUser_phone(m_user_phone);
+		 * vo.setUser_basic_address(m_user_basic_address);
+		 * vo.setUser_detail_address(m_user_detail_address); vo.setUser_img(m_user_img);
+		 * }
+		 */
 
 		String imgUploadPath = uploadPath + File.separator + "imgUpload";
 		String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
