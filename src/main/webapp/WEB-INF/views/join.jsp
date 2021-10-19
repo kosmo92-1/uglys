@@ -278,7 +278,7 @@
 				var userBAddress = document
 						.getElementById('user_Basic_Address').value;
 				var userDAddress = document
-						.getElementById('user_Detail_Address').value;
+						.getElementById('user_Detail_Address').value; 
 			} else {
 				// mobile
 				alert(document.getElementById('m_user_id'));
