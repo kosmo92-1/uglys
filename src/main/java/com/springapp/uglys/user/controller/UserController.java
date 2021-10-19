@@ -118,7 +118,10 @@ public class UserController {
 		String m_user_img = req.getParameter("m_user_img");
 		System.out.println("모바일유저아이디" + m_user_id);
 		if (!m_user_id.isEmpty()) {
+			
+			
 			System.out.println("if (!m_user_admin.isEmpty())");
+			
 
 			int mIdChk = service.checkUser(m_user_id);
 			if (mIdChk == 1) {
@@ -188,6 +191,7 @@ public class UserController {
 		System.out.println("user.getUser_email : " + user.getUser_email());
 		System.out.println("user.getUser_birth : " + user.getUser_birth());
 		System.out.println("user.getUser_admin : " + user.getUser_admin());
+		System.out.println("user.getUser_detail_address : " + user.getUser_detail_address());
 		return "myInfo";
 	}
 

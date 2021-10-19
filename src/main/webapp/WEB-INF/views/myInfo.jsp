@@ -40,7 +40,6 @@
 	crossorigin="anonymous"></script>
 <script
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="/uglys/resources/js/myPage.js"></script>
 <title>회원정보 변경</title>
 </head>
 
@@ -91,7 +90,7 @@
 				<p style="color: red;">비밀 번호를 확인해 주세요.</p>
 			</c:if>
 			<form action="userUpdate.do" method="post"
-				enctype="multipart/form-data">
+				enctype="multipart/form-data" onsubmit='submitAction()'>
 				<!-- PC ver START -->
 				<table class="pc">
 					<tr>
@@ -120,7 +119,7 @@
 					<tr>
 						<th>아이디<b>*</b></th>
 						<td class="input-group-sm"><input type="text" id="id"
-							class="form-control" value="${user.user_id}"></td>
+							class="form-control" value="${user.user_id}" readonly="readonly"></td>
 					</tr>
 					<tr>
 						<th>비밀번호<b>*</b></th>
@@ -158,7 +157,8 @@
                             </div>
                             <div class="input-group-sm">
                                 <input type="text" id="address2" class="form-control">
-                            </div> --> <!-- 211020 담인 수정 -->
+                            </div> -->
+
 							<div class="input-group mb-2">
 								<input class="form-control" type="text" id="user_Basic_Address"
 									disabled="disabled" value="${user.user_basic_address}" />
@@ -170,7 +170,7 @@
 							</div>
 							<div class="input-group">
 								<input type="text" id="user_Detail_Address" class="form-control">
-							</div> <!-- 211020 담인 수정 end -->
+							</div>
 						</td>
 					</tr>
 					<tr>
@@ -221,7 +221,7 @@
 					</c:if>
 					<div class="form-floating mb-3">
 						<input type="text" id="idMb" class="form-control" name="m_user_id"
-							value="${user.user_id}"> <label for="idMb">아이디</label>
+							value="${user.user_id}" readonly="readonly"> <label for="idMb">아이디</label>
 					</div>
 					<div class="form-floating mb-3">
 						<input type="password" id="passwordMb" class="form-control"
@@ -257,11 +257,10 @@
 						</div>
 						<div class="input-group">
 							<input type="text" id="address2Mb" class="form-control p-3"
-								name="m_user_detail_address"> <label for="address2Mb"
+								name="m_user_detail_address" value="${user.user_detail_address}"> <label for="address2Mb"
 								class="sr-only">상세주소</label>
 						</div>
 					</div>
-					<!-- 211020 담인 수정 -->
 					<div class="form-floating mb-3">
 						<div class="form-group">
 							<div class="select_img img">
@@ -271,96 +270,46 @@
 								name="m_user_img">
 						</div>
 					</div>
-				</div>
-				<!--  수정 end -->
-				<!-- Mobile ver END-->
-
-				<!-- 주소검색 모달 -->
-				<div class="modal fade" id="searchPost" tabindex="-1"
-					aria-labelledby="searchPostLabel" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="searchPostLabel">주소검색</h5>
-								<!-- 211020 담인 수정 -->
-								<button type="button" class="btn-close" id="modalClose"
-									data-bs-dismiss="modal" aria-label="Close"></button>
-								<!-- 211020 담인 수정 -->
-							</div>
-							<div class="form-group" id="wrap"></div>
-						</div>
 					</div>
+					<!-- Mobile ver END-->
 				</div>
-
-				<script>
-						if (window.matchMedia('(min-width: 768px)').matches) {
-							// pc 
-							var userId = document.getElementById('user_id');
-							var userPassword = document
-									.getElementById('user_password');
-							var userEmail = document
-									.getElementById('user_email');
-							var userName = document.getElementById('user_name');
-							var userBirth = document
-									.getElementById('user_birth');
-							var userPhone = document
-									.getElementById('user_phone');
-							var userBAddress = document
-									.getElementById('user_basic_address');
-							var userDAddress = document
-									.getElementById('user_detail_address');
-
-							if (userId != null) {
-								alert('아이디를입력해주세요');
-
-							}
-						} else {
-							// mobile
-
-						}
-					</script>
+				<div class="text-center">
+					<button type="submit" class="btn-save btn btn-lg btn-green"
+						id="saveBtn">저장</button>
+					<a class="btn-cancel btn btn-lg btn-light" id="cancelBtn" href="/uglys">취소</a>
+				</div>
+			</form>
 		</div>
-		<div class="text-center">
-			<button type="submit" class="btn-save btn btn-lg btn-green"
-				id="saveBtn">저장</button>
-			<a class="btn-cancel btn btn-lg btn-light" id="cancelBtn">취소</a>
-		</div>
-		</form>
-	</div>
 	</div>
 
 	<jsp:include page="module/footer.jsp" />
-
-	<!-- 211020 담인 수정 -->
 	<script>
-		$("#userImg")
-				.change(
-						function() {
-							if (this.files && this.files[0]) {
-								var reader = new FileReader;
-								reader.onload = function(data) {
-									$(".select_img img").attr("src",
-											data.target.result).width(100);
-									$(".select_img").addClass("inserted";)
-								}
-								reader.readAsDataURL(this.files[0]);
-							}
-						});
-		$("#userImgMb")
-		.change(
-				function() {
-					if (this.files && this.files[0]) {
-						var reader = new FileReader;
-						reader.onload = function(data) {
-							$(".select_img img").attr("src",
-									data.target.result).width(100);
-							$(".select_img").addClass("inserted";)
-						}
-						reader.readAsDataURL(this.files[0]);
-					}
-				});
+		function submitAction(event) {
+			if (window.matchMedia('(min-width: 768px)').matches) {
+				// pc 
+				var userId = document.getElementById('user_id');
+				var userPassword = document.getElementById('user_password');
+				var userEmail = document.getElementById('user_email');
+				var userName = document.getElementById('user_name');
+				var userBirth = document.getElementById('user_birth');
+				var userPhone = document.getElementById('user_phone');
+				var userBAddress = document
+						.getElementById('user_basic_address');
+				var userDAddress = document
+						.getElementById('user_detail_address');
+
+				if (userId != null) {
+					alert('아이디를입력하세요');
+					userId.focus();
+					return false;
+				}
+			} else {
+				// mobile
+
+			}
+		}
 	</script>
-	<!-- 211020 담인 수정 end -->
+	<script src="/uglys/resources/js/myPage.js"></script>
 </body>
 
 </html>

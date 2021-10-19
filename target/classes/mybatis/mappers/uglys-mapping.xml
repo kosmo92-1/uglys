@@ -12,10 +12,6 @@
 		 WHERE USER_ID = #{user_id}
 		   AND USER_PASSWORD = #{user_password}
 	</select>
-	<select id="idChk" parameterType="java.lang.String" resultType="int">
-		SELECT COUNT(*) FROM USER_ACCOUNT WHERE USER_ID =#{user_id}
-	</select>
-	
 	<insert id="insertUser" parameterType="userVO">
 		INSERT INTO USER_ACCOUNT
 		 VALUES(
@@ -143,13 +139,6 @@
 	<![CDATA[
 		SELECT COUNT(*) FROM UGLY_BOARD WHERE ID > 0
 	]]>
-		<if test="searchCondition == 'TITLE'">
-			AND TITLE LIKE '%'||#{searchKeyword}||'%' 
-		</if>
-		<if test="searchCondition == 'CONTENT'">
-			AND CONTENT LIKE '%'||#{searchKeyword}||'%'
-		</if>
-	
 	</select>
 	
 	
