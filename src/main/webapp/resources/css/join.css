@@ -55,15 +55,11 @@
 	font-size: .875rem
 }
 
-.wrapper .inner form table tr td #id, .wrapper .inner form table tr td #password,
-	.wrapper .inner form table tr td #email, .wrapper .inner form table tr td #phoneNum,
-	.wrapper .inner form table tr td #address, .wrapper .inner form table tr td #address2
-	{
+.wrapper .inner form table tr td #id, .wrapper .inner form table tr td #password, .wrapper .inner form table tr td #email, .wrapper .inner form table tr td #phoneNum, .wrapper .inner form table tr td #address, .wrapper .inner form table tr td #address2 {
 	width: 300px
 }
 
-.wrapper .inner form table tr td #name, .wrapper .inner form table tr td #birthday
-	{
+.wrapper .inner form table tr td #name, .wrapper .inner form table tr td #birthday {
 	width: 150px
 }
 
@@ -71,7 +67,7 @@
 	width: 80px
 }
 
-.wrapper .inner form table tr:not(:last-child ){
+.wrapper .inner form table tr:not(:last-child) {
 	border-bottom: 1px solid #eee
 }
 
@@ -107,4 +103,15 @@
 
 .wrapper .inner form .toggle-box .label-toggle {
 	font-size: .875rem !important
-} /*# sourceMappingURL=join.css.map */
+}
+
+/* for script */
+
+.selected-img {
+	display: none;
+}
+
+.inserted {
+	display: block !important;
+	margin-bottom:30px
+}
