@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<!--초기화 CSS -->
+<!--초기화 CSS --> 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/reset.css">
 <link rel="stylesheet"
