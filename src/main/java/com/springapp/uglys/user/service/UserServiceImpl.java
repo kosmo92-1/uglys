@@ -40,8 +40,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public int checkUser(UserVO vo) {
+	public int checkUser(String user_id) {
 		// TODO Auto-generated method stub
-		return 0;
+		return dao.checkUser(user_id);
 	}
 }

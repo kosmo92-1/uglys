@@ -12,7 +12,7 @@
 		 WHERE USER_ID = #{user_id}
 		   AND USER_PASSWORD = #{user_password}
 	</select>
-	<select id="idChk" parameterType="userVO" resultType="int">
+	<select id="idChk" parameterType="java.lang.String" resultType="int">
 		SELECT COUNT(*) FROM USER_ACCOUNT WHERE USER_ID =#{user_id}
 	</select>
 	

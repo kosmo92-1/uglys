@@ -91,13 +91,12 @@ public class UserController {
 		@RequestMapping(value = "/insertUser", method = RequestMethod.POST)
 		public String postInsertUser(UserVO vo,HttpServletRequest req,RedirectAttributes rttr,HttpServletResponse response,MultipartFile file) throws Exception {
 			logger.info("post insert");
-			System.out.println("이미지"+vo.getUser_img());
 			String imgUploadPath = uploadPath + File.separator + "imgUpload";
 			String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
 			String fileName = null;
 			// 아이디 중복체크
 			// 아이디에 해당하는 정보를 불러옴
-			int idChk =service.checkUser(vo);
+			int idChk =service.checkUser(vo.getUser_id());
 			
 			// 중복값이 있으면
 			
@@ -120,8 +119,16 @@ public class UserController {
 			String m_user_basic_address = req.getParameter("m_user_basic_address");
 			String m_user_detail_address = req.getParameter("m_user_detail_address");
 			String m_user_img= req.getParameter("m_user_img");
-					
-			if(m_user_admin.isEmpty() ) {
+			System.out.println("모바일유저아이디"+m_user_id);		
+			if(!m_user_admin.isEmpty() ) {
+				
+				int mIdChk = service.checkUser(m_user_id);
+				if(mIdChk==1) {
+					System.out.println("모바일 아이디 중복");
+					rttr.addFlashAttribute("already", false);
+					return "redirect:insertUser";
+				}
+				
 				vo.setUser_admin(m_user_admin);
 				vo.setUser_id(m_user_id);
 				vo.setUser_password(m_user_password);
@@ -139,6 +146,7 @@ public class UserController {
 			if(!file.isEmpty()) {
 				 fileName =  UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath); 
 				 vo.setUser_img(".."+File.separator + "imgUpload" + ymdPath + File.separator + fileName);
+				 System.out.println("유저이미지"+vo.getUser_img());
 			}else {
 				vo.setUser_img("");
 			}

@@ -42,8 +42,8 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public UserVO checkUser(UserVO vo) {
-		return sql.selectOne("userMapping.checkUser",vo);
+	public int checkUser(String user_id) {
+		return sql.selectOne("userMapping.idChk",user_id);
 	}
 
 

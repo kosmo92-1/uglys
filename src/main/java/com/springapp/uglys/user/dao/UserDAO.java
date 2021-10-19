@@ -19,7 +19,7 @@ public interface UserDAO {
 	// 회원 정보 보기
 	public UserVO selectUser(UserVO vo);
 	
-	public UserVO checkUser(UserVO vo);
+	public int checkUser(String user_id);
 	
 	
 }

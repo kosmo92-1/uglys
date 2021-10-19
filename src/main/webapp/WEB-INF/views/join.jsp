@@ -129,7 +129,7 @@
 							<div class="form-group">
 		                    <label class="control-label col-md-2"><b>사진</b></label>
 		                    <div class="select_img img" ><img src=""></div>
-		                        <input class="form-control" type="file" id="user_img" name="file">
+		                        <input class="form-control" type="file" id="file" name="file">
 		                    <div class="col-md-6">
 		                       <!--  <input type="hidden" id="userImage" name="userImage" required> -->
 		                    </div>
@@ -163,6 +163,9 @@
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" id="idMb" name="m_user_id" class="form-control" placeholder="아이디">
+                        <c:if test="${already eq false}">
+							<p>중복된 아이디입니다.</p>
+						</c:if>
                         <label for="idMb">아이디</label>
                     </div>
                     <div class="form-floating mb-3">
@@ -199,7 +202,7 @@
                         </div>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="file" id="m_user_img" name="file" >
+                        <input type="file" id="file" name="file" >
                         <label>프로필사진</label>
                     </div>
                 </div> 

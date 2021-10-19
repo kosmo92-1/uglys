@@ -20,6 +20,6 @@ public interface UserService {
 	public UserVO selectUser(UserVO vo);
 	
 	// 중복체크
-	public int checkUser(UserVO vo);
+	public int checkUser(String user_id);
 	
 }
