@@ -54,7 +54,7 @@ public class ReviewController {
 	
 	// 후기 등록
 	@RequestMapping(value = "/insertReview.do", method = RequestMethod.POST)
-	public String insert(ReviewVO vo, MultipartHttpServletRequest req) throws Exception {
+	public String insert(ReviewVO vo, MultipartHttpServletRequest req, HttpServletResponse res) throws Exception {
 		System.out.println("/insertReview.do");
 		
 		String m_writer = req.getParameter("m_writer");
@@ -63,13 +63,39 @@ public class ReviewController {
 		
 		if (!m_writer.isEmpty()) {
 			vo.setWriter(m_writer);
-		}
+		} 
 		if (!m_title.isEmpty()) {
 			vo.setTitle(m_title);
+		} else if (!vo.getTitle().isEmpty()) {
+			vo.setTitle(vo.getTitle());
+		} else {
+			res.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = res.getWriter();
+			out.println("<script>alert('제목이 없어요'); location.href='insertReview.do';</script>");
 		}
 		if (!m_content.isEmpty()) {
 			vo.setContent(m_content);
+		} else if (!vo.getContent().isEmpty()) {
+			
+		} else {
+			res.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = res.getWriter();
+			out.println("<script>alert('내용이 없어요'); location.href='insertReview.do';</script>");
 		}
+		
+		
+		
+		
+		
+//		if (!m_writer.isEmpty()) {
+//			vo.setWriter(m_writer);
+//		}
+//		if (!m_title.isEmpty()) {
+//			vo.setTitle(m_title);
+//		}
+//		if (!m_content.isEmpty()) {
+//			vo.setContent(m_content);
+//		}
 		
 		List<MultipartFile> fileList = req.getFiles("file");
 

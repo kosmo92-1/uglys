@@ -65,22 +65,17 @@
 					<!--상품 사용후기 시작-->
 					<section id="sit_use_list">
 						<ol id="sit_use_ol">
-							<li class="sit_use_li">
-								<div class="border-b-2 border-gray-100 pb-8 text-gray-500 cursor-pointer">
-									<div class="flex justify-between pb-4"></div>
-									<div class="flex space-x-4">
-										<div class="flex-1 space-y-2">
+									<c:forEach items="${reviewList}" var="reviewVO">
+									<li class="sit_use_li">
 											<button type="button" class="sit_use_li_title">
-												<c:forEach items="${reviewList}" var="reviewVO">
-													<td><img
-														src="/uglys/resources/${reviewVO.content_img }" alt=""
+												<a href="getReview.do?pageNum=${pageMaker.cri.pageNum}
+									  	 				&amount=10&reviewNum=${reviewVO.reviewNum}
+										 				&searchCondition=${param.searchCondition}
+										 				&searchKeyword=${param.searchKeyword}">
+													<td><img src="/uglys/resources/${reviewVO.content_img }" alt=""
 														class="absolute w-full h-full object-cover" width="100">
-														<a
-														href="getReview.do?pageNum=${pageMaker.cri.pageNum}
-									  	 &amount=10&reviewNum=${reviewVO.reviewNum}
-										 &searchCondition=${param.searchCondition}
-										 &searchKeyword=${param.searchKeyword}">제목
-															: ${reviewVO.title}</a></td>
+															제목 : ${reviewVO.title}
+													</td>
 													<dl class="sit_use_dl">
 														<dt>작성자</dt>
 														<dd>작성자 : ${reviewVO.writer}</dd>
@@ -89,9 +84,9 @@
 														<dt>조회수</dt>
 														<dd>조회수 : ${reviewVO.viewCnt}</dd>
 													</dl>
+												</a>
 											</button>
-											</a>
-							</li>
+											</li>
 							</c:forEach>
 						</ol>
 					</section>
