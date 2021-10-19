@@ -49,7 +49,8 @@
 		<h2 class="sr-only">회원가입 페이지</h2>
 		<div class="inner">
 			<h3>회원가입</h3>
-			<form action="insertUser" method="post" enctype="multipart/form-data">
+			<form action="insertUser" method="post" enctype="multipart/form-data"
+				onsubmit='return submitAction();'>
 				<!-- PC ver START -->
 				<table class="pc">
 					<tr>
@@ -69,7 +70,7 @@
 					</tr>
 					<tr>
 						<th>아이디<b>*</b></th>
-						<td class="input-group-sm"><input type="text" id="id"
+						<td class="input-group-sm"><input type="text" id="user_id"
 							class="form-control" name="user_id"> <c:if
 								test="${already eq false}">
 								<p>중복된 아이디입니다.</p>
@@ -78,29 +79,29 @@
 					<tr>
 						<th>비밀번호<b>*</b></th>
 						<td class="input-group-sm"><input type="password"
-							id="password" class="form-control" name="user_password">
+							id="user_password" class="form-control" name="user_password">
 						</td>
 					</tr>
 					<tr>
 						<th>이메일<b>*</b></th>
-						<td class="input-group-sm"><input type="email" id="email"
-							name="user_email" class="form-control"
+						<td class="input-group-sm"><input type="email"
+							id="user_email" name="user_email" class="form-control"
 							placeholder="name@example.com"></td>
 					</tr>
 					<tr>
 						<th>이름<b>*</b></th>
-						<td class="input-group-sm"><input type="text" id="name"
+						<td class="input-group-sm"><input type="text" id="user_name"
 							class="form-control" name="user_name"></td>
 					</tr>
 					<tr>
 						<th>생년월일<b>*</b></th>
-						<td class="input-group-sm"><input type="text" id="birthday"
+						<td class="input-group-sm"><input type="text" id="user_birth"
 							class="form-control" placeholder="생년월일6자리" name="user_birth">
 						</td>
 					</tr>
 					<tr>
 						<th>휴대폰 번호<b>*</b></th>
-						<td class="input-group-sm"><input type="tel" id="phoneNum"
+						<td class="input-group-sm"><input type="tel" id="user_phone"
 							class="form-control" placeholder="- 를 빼고 입력해주세요"
 							name="user_phone"></td>
 					</tr>
@@ -247,10 +248,38 @@
 
 		<jsp:include page="module/footer.jsp" />
 	</div>
+<%-- 
+	<script>
+		function submitAction(event) {
+			if (window.matchMedia('(min-width: 768px)').matches) {
+				// pc 
+				var userId = document.getElementById('user_id').value;
+				var userPassword = document.getElementById('user_password').value;
+				var userEmail = document.getElementById('user_email').value;
+				var userName = document.getElementById('user_name').value;
+				var userBirth = document.getElementById('user_birth').value;
+				var userPhone = document.getElementById('user_phone').value;
+				var userBAddress = document
+						.getElementById('user_Basic_Address').value;
+				var userDAddress = document
+						.getElementById('user_Detail_Address').value; 
+			} else {
+				// mobile
+				alert(document.getElementById('m_user_id'));
+				var userId = document.getElementById('idMb').value;
+				var userPassword = document.getElementById('passwordMb').value;
+				var userEmail = document.getElementById('emailMb').value;
+				var userName = document.getElementById('nameMb').value;
+				var userBirth = document.getElementById('birthdayMb').value;
+				var userPhone = document.getElementById('phoneNumMb').value;
+				var userBAddress = document
+						.getElementById('m_user_basic_address').value;
+				var userDAddress = document
+						.getElementById('user_Basic_Address-mb').value;
+	</script> --%>
 
 	<script>
-		$("#userImg")
-				.change(
+		$("#userImg").change(
 						function() {
 							if (this.files && this.files[0]) {
 								var reader = new FileReader;
@@ -277,6 +306,7 @@
 							}
 						});
 	</script>
+
 	<script type="text/javascript">
 		// 우편번호 찾기 찾기 화면을 넣을 element
 		var element_wrap = document.getElementById("wrap");

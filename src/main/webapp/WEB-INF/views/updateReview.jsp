@@ -50,7 +50,17 @@
                         <td>
                         <div class="form-group">
 		                    <label class="control-label col-md-2"><b></b></label>
-		                    <div class="select_img img" ><img src="${review.content_img}"></div>
+		                    <div class="select_img img" >
+		                    	<c:set var="content_img" value="${reviewVO.content_img }" />
+								<c:choose>
+								    <c:when test="${empty content_img}">
+								    	<!-- 기본이미지 넣어주세요 -->
+								        <img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="">
+								    </c:when>
+								    <c:otherwise>
+									    <img src="${content_img }" alt="" >
+								    </c:otherwise>
+								</c:choose>
 		                        <input class="form-control" type="file" id="user_img" name="file">
 		                    <div class="col-md-6">
 		                        <input type="hidden" id="userImage" name="userImage" required="required">
@@ -97,9 +107,9 @@
 
                 <div class="text-center">
                     <button type="submit" class="btn-join btn btn-lg btn-secondary" value="수정">수정</button>
-                    <button type="submit" class="btn-join btn btn-lg btn-secondary" value="삭제">
+                    <button type="button" class="btn-join btn btn-lg btn-secondary" value="삭제">
                     <a href="deleteReview.do?reviewNum=${review.reviewNum }" style="color:white">삭제</a></button>
-                    <button type="submit" class="btn-join btn btn-lg btn-secondary">
+                    <button type="button" class="btn-join btn btn-lg btn-secondary">
                     <a href="getReviewList.do" style="color:white">닫기</a></button>
                 </div>
             </form>

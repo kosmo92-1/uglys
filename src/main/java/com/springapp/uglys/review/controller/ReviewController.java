@@ -129,7 +129,7 @@ public class ReviewController {
 	
 	// 후기 수정
 	@RequestMapping(value = "/updateReview.do", method = RequestMethod.POST)
-	public String update(ReviewVO vo, MultipartHttpServletRequest req) throws Exception {
+	public String update(ReviewVO vo, MultipartHttpServletRequest req, HttpServletResponse res) throws Exception {
 		
 		String m_writer = req.getParameter("m_writer");
 		String m_title = req.getParameter("m_title");
@@ -137,13 +137,39 @@ public class ReviewController {
 		
 		if (!m_writer.isEmpty()) {
 			vo.setWriter(m_writer);
-		}
+		} 
 		if (!m_title.isEmpty()) {
 			vo.setTitle(m_title);
+		} else if (!vo.getTitle().isEmpty()) {
+			vo.setTitle(vo.getTitle());
+		} else {
+			res.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = res.getWriter();
+			out.println("<script>alert('제목이 없어요'); location.href='updateReview.do?reviewNum="+ vo.getReviewNum() +"';</script>");
 		}
 		if (!m_content.isEmpty()) {
 			vo.setContent(m_content);
+		} else if (!vo.getContent().isEmpty()) {
+			vo.setContent(vo.getContent());
+		} else {
+			res.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = res.getWriter();
+			out.println("<script>alert('내용이 없어요'); location.href='updateReview.do?reviewNum="+ vo.getReviewNum()+"';</script>");
 		}
+		
+		
+		
+		
+		
+//		if (!m_writer.isEmpty()) {
+//			vo.setWriter(m_writer);
+//		}
+//		if (!m_title.isEmpty()) {
+//			vo.setTitle(m_title);
+//		}
+//		if (!m_content.isEmpty()) {
+//			vo.setContent(m_content);
+//		}
 		
 		List<MultipartFile> fileList = req.getFiles("file");
 		
