@@ -2,8 +2,8 @@ package com.springapp.uglys.user.controller;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.List;
 
-import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.springapp.uglys.user.service.UserService;
@@ -90,30 +91,82 @@ public class UserController {
 	}
 
 	// 회원가입 post
-	@RequestMapping(value = "/insertUser", method = RequestMethod.POST)
-	public String postInsertUser(UserVO vo, HttpServletRequest req, MultipartFile file) throws Exception {
-		logger.info("post insert");
-		System.out.println("vo : " + vo.getUser_admin());
-		uploadPath = req.getSession().getServletContext().getRealPath("/resources");
-		System.out.println("업로드 패스 : " + uploadPath);
+		@RequestMapping(value = "/insertUser", method = RequestMethod.POST)
+		public String postInsertUser(UserVO vo,MultipartHttpServletRequest req,HttpServletResponse response) throws Exception {
+			
+			logger.info("post insert");
+			uploadPath = req.getSession().getServletContext().getRealPath("/resources");
+			// 모바일 버전 변수
+			String m_user_admin = req.getParameter("m_user_admin");
+			String m_user_id = req.getParameter("m_user_id");
+			String m_user_password = req.getParameter("m_user_password");
+			String m_user_email = req.getParameter("m_user_email");
+			String m_user_name = req.getParameter("m_user_name");
+			String m_user_birth = req.getParameter("m_user_birth");
+			String m_user_phone = req.getParameter("m_user_phone");
+			String m_user_basic_address = req.getParameter("m_user_basic_address");
+			String m_user_detail_address = req.getParameter("m_user_detail_address");
+					
+			if(m_user_admin !=null ) {
+				vo.setUser_admin(m_user_admin);
+			}
+			if(!m_user_id.isEmpty()) {
+				vo.setUser_id(m_user_id);
+			}
+			if(!m_user_password.isEmpty()) {
+				vo.setUser_password(m_user_password);
+			}
+			if(!m_user_email.isEmpty()) {
+				vo.setUser_email(m_user_email);
+			}
+			if(!m_user_name.isEmpty()) {
+				vo.setUser_name(m_user_name);
+			}
+			if(!m_user_birth.isEmpty()) {
+				vo.setUser_birth(m_user_birth);
+			}
+			if(!m_user_phone.isEmpty()) {
+				vo.setUser_phone(m_user_phone);
+			}
+			if(!m_user_basic_address.isEmpty()) {
+				vo.setUser_basic_address(m_user_basic_address);
+			}
+			if(!m_user_detail_address.isEmpty()) {
+				vo.setUser_detail_address(m_user_detail_address);
+				
+			}
+			List<MultipartFile> fileList = req.getFiles("file");
+			
 
-		String imgUploadPath = uploadPath + File.separator + "imgUpload";
-		String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
-		String fileName = null;
 
-		if (file != null) {
-			fileName = UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath);
-		} else {
-			fileName = uploadPath + File.separator + "images" + File.separator + "none.png";
+			for (MultipartFile file : fileList) {
+				String imgUploadPath = uploadPath + File.separator + "imgUpload";
+				String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
+				String fileName = null;
+				
+				// 파일이 있다면
+				if(!file.isEmpty()) {
+					 fileName =  UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath); 
+					 vo.setUser_img(".."+File.separator + "imgUpload" + ymdPath + File.separator + fileName);
+					 break;// 경로를 저장하고 반복문을 빠져나간다.
+				}
+				// 파일이 없는 부분은 ""을 넣어준다.
+				vo.setUser_img("");
+			}
+			
+			//패스 추가
+			System.out.println("setUser_img :"+vo.getUser_img());
+			service.insertUser(vo);
+			
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('가입을 환영합니다.');</script>");
+			out.flush();
+
+			return "login";
+
+
 		}
-		// 패스 추가
-		vo.setUser_img(".." + File.separator + "imgUpload" + ymdPath + File.separator + fileName);
-		System.out.println("setUser_img :" + vo.getUser_img());
-		service.insertUser(vo);
-
-		return "login";
-
-	}
 
 	// 회원 정보 뷰페이지
 	@RequestMapping(value = "/userUpdateView", method = RequestMethod.GET)
