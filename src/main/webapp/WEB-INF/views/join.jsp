@@ -156,11 +156,18 @@
 
 				<!-- Mobile ver START-->
 				   <div class="mb">
-                    <div class="toggle-box form-check form-switch mb-3">
-                        <input type="checkbox" class="form-check-input" role="switch" id="userType" >
-                        <input type="hidden" name="m_user_admin" value="일반">
-                        <label for="userType" class="label-toggle form-check-label">관리자로 가입하기</label>
+				   <div class="mb-3">
+				   <div class="form-check-inline">
+                                <input type="radio" id="userMb" class="form-check-input"
+                                    name="m_user_admin" value="일반" checked> <label
+                                    for="user" class="form-check-label"> 사용자 </label>
                     </div>
+                    <div class="form-check-inline">
+                                <input type="radio" id="adminMb" class="form-check-input"
+                                    name="m_user_admin" value="관리자"> <label for="admin"
+                                    class="form-check-label"> 관리자 </label>
+                            </div>
+				   </div>
                     <div class="form-floating mb-3">
                         <input type="text" id="idMb" name="m_user_id" class="form-control" placeholder="아이디">
                         <c:if test="${already eq false}">
@@ -202,7 +209,7 @@
                         </div>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="file" id="file" name="file" >
+                        <input type="file" id="m_file" name="file" >
                         <label>프로필사진</label>
                     </div>
                 </div> 
@@ -336,7 +343,7 @@
 	<script
 		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		<!-- 에러로 주석처리 -->
-	<%-- <script src="${pageContext.request.contextPath}/resources/js/myPage.js"></script> --%>
+	 <script src="${pageContext.request.contextPath}/resources/js/myPage.js"></script>
 </body>
 
 </html>

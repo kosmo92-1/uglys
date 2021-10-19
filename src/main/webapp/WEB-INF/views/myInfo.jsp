@@ -93,7 +93,7 @@
             <c:if test="${fail == false }">
                <p style="color: red;">비밀 번호를 확인해 주세요.</p>
            	</c:if>
-            <form action="">
+            <form action="userUpdate.do" method="post" enctype="multipart/form-data">
                 <!-- PC ver START -->
                 <table class="pc">
                     <tr>
@@ -186,7 +186,7 @@
                     <tr>
                         <th>프로필 사진</th>
                         <td>
-                           							<div class="form-group">
+                           <div class="form-group">
 		                    <label class="control-label col-md-2"><b>사진</b></label>
 		                    <div class="select_img img" ><img src="${user.user_img }"></div>
 		                        <input class="form-control" type="file" id="user_img" name="file">
@@ -214,69 +214,72 @@
 
                 <!-- Mobile ver START-->
                 <div class="mb">
-
                     <c:if test="${user.user_admin eq '관리자' }">
-                        <div class="toggle-box form-check form-switch mb-3">
-                            <input type="checkbox" class="form-check-input" role="switch">
-                            <label for="userType" class="label-toggle form-check-label">사용자로 변경하기</label>
-                        </div>
-                    </c:if>
-
-                    <c:if test="${user.user_admin eq '일반' }">
-                        <div class="toggle-box form-check form-switch mb-3">
-                            <input type="checkbox" class="form-check-input" role="switch">
-                            <label for="userType" class="label-toggle form-check-label">관리자로 변경하기</label>
-                        </div>
-                    </c:if>
-
+                                <div class="form-group">
+                                    <label class="control-label col-md-offset-7 col-md-2">
+                                        <input type="radio" name="m_user_admin" value="관리자" checked>
+                                        <b>관리자</b>
+                                    </label>
+                                    <label class="control-label col-md-2">
+                                        <input type="radio" name="m_user_admin" value="일반" disabled="disabled">
+                                        <b>사용자</b>
+                                    </label>
+                                </div>
+                            </c:if>
+                            <c:if test="${user.user_admin eq '일반' }">
+                                <div class="form-group">
+                                    <label class="control-label col-md-offset-7 col-md-2">
+                                        <input type="radio" name="m_user_admin" value="관리자" disabled="disabled">
+                                        <b>관리자</b>
+                                    </label>
+                                    <label class="control-label col-md-2">
+                                        <input type="radio" name="m_user_admin" value="일반" checked>
+                                        <b>사용자</b>
+                                    </label>
+                                </div>
+                            </c:if>
                     <div class="form-floating mb-3">
-                        <input type="text" id="idMb" class="form-control" value="${user.user_id}">
+                        <input type="text" id="idMb" class="form-control" name="m_user_id" value="${user.user_id}">
                         <label for="idMb">아이디</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="password" id="passwordMb" class="form-control" placeholder="비밀번호">
+                        <input type="password" id="passwordMb" class="form-control" placeholder="비밀번호" name="m_user_password">
                         <label for="passwordMb">비밀번호</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="email" id="emailMb" class="form-control" value="${user.user_email}">
+                        <input type="email" id="emailMb" class="form-control" value="${user.user_email}" name="m_user_email">
                         <label for="emailMb">이메일</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" id="nameMb" class="form-control" value="${user.user_name}">
+                        <input type="text" id="nameMb" class="form-control" value="${user.user_name}" name="m_user_name">
                         <label for="nameMb">이름</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" id="birthdayMb" class="form-control" value="${user.user_birth}">
+                        <input type="text" id="birthdayMb" class="form-control" value="${user.user_birth}" name="m_user_birth">
                         <label for="birthdayMb">생년월일</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" id="phoneNumMb" class="form-control" value="${user.user_phone}">
+                        <input type="text" id="phoneNumMb" class="form-control" value="${user.user_phone}" name="m_user_phone">
                         <label for="phoneNumMb">휴대폰 번호</label>
                     </div>
                     <div class="mb-3">
-                        <!-- <div class="input-group mb-2">
-                            <input type="text" id="addressMb" class="form-control p-3"
+                         <div class="input-group mb-2">
+                            <input type="text" id="addressMb" class="form-control p-3" name="m_user_basic_address"
                                 value="${user.user_basic_address}">
                             <label for="addressMb" class="sr-only">주소</label>
                             <button type="button" class="btn btn-green">검색</button>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" id="address2Mb" class="form-control p-3">
+                     </div>
+                     <div class="input-group">
+                            <input type="text" id="address2Mb" class="form-control p-3" name="m_user_detail_address">
                             <label for="address2Mb" class="sr-only">상세주소</label>
                         </div>
-                    </div> -->
- <!--                    <div class="input-group mb-2">
-                        <input type="text" id="user_Basic_Address-mb" class="form-control p-3" placeholder="주소"
-                            disabled="disabled" value="${user.user_basic_address}">
-                        <label for="addressMb" class="sr-only">주소</label>
-                        <button type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal"
-                            data-bs-target="#searchPost" onclick="execDaumPostcode()"><b>검색</b></button>
                     </div>
-                    <div class="input-group">
-                        <input type="text" id="user_Detail_Address-mb" class="form-control p-3" placeholder="상세주소" value="${user.user_detail_address}">
-                        <label for="address2Mb" class="sr-only">상세주소</label>
+                    <div class="form-group">
+		                <div class="form-floating mb-3">
+                        	<input type="file" id="m_file" name="file" >
+                        <label>프로필사진</label>
                     </div>
-                </div> --%>
+                </div> 
                 <!-- Mobile ver END-->
 
                 <div class="text-center">
@@ -284,6 +287,28 @@
                     <a class="btn-cancel btn btn-lg btn-light" id="cancelBtn">취소</a>
 
                 </div>
+                <script>
+                if ( window.matchMedia('(min-width: 768px)').matches ) {
+                	// pc 
+                	var userId = document.getElementById('user_id');
+                	var userPassword = document.getElementById('user_password');
+                	var userEmail = document.getElementById('user_email');
+                	var userName= document.getElementById('user_name');
+                	var userBirth = document.getElementById('user_birth');
+                	var userPhone = document.getElementById('user_phone');
+                	var userBAddress = document.getElementById('user_basic_address');
+                	var userDAddress = document.getElementById('user_detail_address');
+                	
+                	if(userId != null){
+                		alert('아이디를입력해주세요');
+                		
+                	}
+                }else{
+                	// mobile
+                	
+                }
+                	
+                </script>
             </form>
         </div>
     </div>

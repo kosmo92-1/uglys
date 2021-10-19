@@ -175,6 +175,8 @@ public class UserController {
 
 			return "login";
 		}
+		
+		
 		UserVO vo = (UserVO) session.getAttribute("user");
 		System.out.println("vo.getUser_id() :" + vo.getUser_id());
 
@@ -191,29 +193,55 @@ public class UserController {
 
 	// 수정 완료
 	@RequestMapping(value = "/userUpdate", method = RequestMethod.POST)
-	public String userUpdate(UserVO vo, HttpSession session, MultipartFile file, HttpServletRequest req)
+	public String userUpdate(UserVO vo, HttpServletRequest req, RedirectAttributes rttr,
+			HttpServletResponse response, MultipartFile file)
 			throws Exception {
+		
 		uploadPath = req.getSession().getServletContext().getRealPath("/resources");
+		System.out.println("업로드할 파일이름 : " + file.getOriginalFilename());
 		System.out.println("업로드 패스 : " + uploadPath);
 		logger.info("수정 처리 메서드");
-		System.out.println("수정할데이터 getUser_email :" + vo.getUser_email());
-		System.out.println("수정할데이터 getUser_name:" + vo.getUser_name());
-		System.out.println("수정할데이터 getUser_birth:" + vo.getUser_birth());
-		System.out.println("수정할데이터 getUser_phone:" + vo.getUser_phone());
-		System.out.println("수정할데이터 getUser_basic_address :" + vo.getUser_basic_address());
-		System.out.println("수정할데이터 getUser_detail_address :" + vo.getUser_detail_address());
-		System.out.println("수정할데이터 getUser_id :" + vo.getUser_id());
+		
+		
+		String m_user_admin = req.getParameter("m_user_admin");
+		String m_user_id = req.getParameter("m_user_id");
+		String m_user_password = req.getParameter("m_user_password");
+		String m_user_email = req.getParameter("m_user_email");
+		String m_user_name = req.getParameter("m_user_name");
+		String m_user_birth = req.getParameter("m_user_birth");
+		String m_user_phone = req.getParameter("m_user_phone");
+		String m_user_basic_address = req.getParameter("m_user_basic_address");
+		String m_user_detail_address = req.getParameter("m_user_detail_address");
+		String m_user_img = req.getParameter("m_user_img");
+		System.out.println("모바일유저아이디" + m_user_id);
+		// 모바일인 경우
+		if (!m_user_id.isEmpty()) {
+			System.out.println("if (!m_user_admin.isEmpty())");
+
+			vo.setUser_admin(m_user_admin);
+			vo.setUser_id(m_user_id);
+			vo.setUser_password(m_user_password);
+			vo.setUser_email(m_user_email);
+			vo.setUser_name(m_user_name);
+			vo.setUser_birth(m_user_birth);
+			vo.setUser_phone(m_user_phone);
+			vo.setUser_basic_address(m_user_basic_address);
+			vo.setUser_detail_address(m_user_detail_address);
+			vo.setUser_img(m_user_img);
+		}
+
 		String imgUploadPath = uploadPath + File.separator + "imgUpload";
 		String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
 		String fileName = null;
-
-		if (file != null) {
+		// 파일이 있다면
+		if (!file.isEmpty()) {
+			System.out.println("if (!file.isEmpty())");
 			fileName = UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath);
+			vo.setUser_img(".." + File.separator + "imgUpload" + ymdPath + File.separator + fileName);
+			System.out.println("유저이미지 : " + vo.getUser_img());
 		} else {
-			fileName = uploadPath + File.separator + "images" + File.separator + "none.png";
+			vo.setUser_img("");
 		}
-		vo.setUser_img(".." + File.separator + "imgUpload" + ymdPath + File.separator + fileName);
-		System.out.println("수정할데이터 getUser_img :" + vo.getUser_img());
 		service.updateUser(vo);
 
 		return "redirect:/";
