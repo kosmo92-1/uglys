@@ -16,7 +16,7 @@
 		</c:if>
 		<c:if test="${not empty user }">
 			<li><a href="/uglys/user/userUpdateView">마이페이지</a></li>
-			<li>${user.user_name }님환영합니다! <a href="/uglys/user/logout">로그아웃</a></li>
+			<li>${user.user_name } 님 환영합니다! <a href="/uglys/user/logout">로그아웃</a></li>
 		</c:if>
 	</ul>
 </header>
