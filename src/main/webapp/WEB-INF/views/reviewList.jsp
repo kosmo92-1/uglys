@@ -72,8 +72,20 @@
 									  	 				&amount=10&reviewNum=${reviewVO.reviewNum}
 										 				&searchCondition=${param.searchCondition}
 										 				&searchKeyword=${param.searchKeyword}">
-													<td><img src="/uglys/resources/${reviewVO.content_img }" alt=""
+													<td>
+													
+													<c:set var="content_img" value="${reviewVO.content_img }" />
+				<c:choose>
+				    <c:when test="${empty content_img}">
+				    	<!-- 기본이미지 넣어주세요 -->
+				        <img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="" class="absolute w-full h-full object-cover" width="100">
+				    </c:when>
+				    <c:otherwise>
+					    <img src="/uglys/resources/${reviewVO.content_img }" alt=""
 														class="absolute w-full h-full object-cover" width="100">
+				    </c:otherwise>
+				</c:choose>
+														
 															제목 : ${reviewVO.title}
 													</td>
 													<dl class="sit_use_dl">
@@ -115,3 +127,5 @@
 	<jsp:include page="module/footer.jsp" />
 </body>
 </html>
+
+
