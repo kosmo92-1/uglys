@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.springapp.uglys.review.service.ReviewService;
 import com.springapp.uglys.review.vo.Criteria;
@@ -36,9 +36,7 @@ public class ReviewController {
 	@Autowired
 	private ReviewService reviewService;
 	
-	// 추가
 	private String uploadPath;
-	// 
 
 	// 후기 등록
 	@RequestMapping(value = "/insertReview.do", method = RequestMethod.GET)
@@ -54,69 +52,94 @@ public class ReviewController {
 		return "insertReview";
 	}
 	
-	// 수정
 	// 후기 등록
 	@RequestMapping(value = "/insertReview.do", method = RequestMethod.POST)
-	public String insert(ReviewVO vo, HttpServletRequest req, MultipartFile file) throws Exception {
+	public String insert(ReviewVO vo, MultipartHttpServletRequest req) throws Exception {
 		System.out.println("/insertReview.do");
 		
+		String m_writer = req.getParameter("m_writer");
+		String m_title = req.getParameter("m_title");
+		String m_content = req.getParameter("m_content");
+		
+		if (!m_writer.isEmpty()) {
+			vo.setWriter(m_writer);
+		}
+		if (!m_title.isEmpty()) {
+			vo.setTitle(m_title);
+		}
+		if (!m_content.isEmpty()) {
+			vo.setContent(m_content);
+		}
+		
+		List<MultipartFile> fileList = req.getFiles("file");
+
 		uploadPath = req.getSession().getServletContext().getRealPath("/resources");
 		System.out.println("업로드 패스 : "+uploadPath);
-		
-		String imgUploadPath = uploadPath + File.separator + "imgUpload";
-		String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
-		String fileName = null;
-		
-		if(file != null) {
-			 fileName =  UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath); 
-			} else {
-			 fileName = uploadPath + File.separator + "images" + File.separator + "none.png";
+
+		for (MultipartFile file : fileList) {
+			String imgUploadPath = uploadPath + File.separator + "imgUpload";
+			String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
+			String fileName = null;
+
+			if(!file.isEmpty()) {
+				fileName =  UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath);
+				vo.setContent_img(".." + File.separator + "imgUpload" + ymdPath + File.separator + fileName);
+				break;
 			}
-		//패스 추가
-		vo.setContent_img("imgUpload" + ymdPath + File.separator + fileName);
-		System.out.println("setUser_img :"+vo.getContent_img());
-		
+			vo.setContent_img("");
+		}
+
 		reviewService.insert(vo);
 		return "redirect:getReviewList.do";
 	}
-	// 수정
 	
-	
-	
-	// 수정
 	// 후기 수정
 	@RequestMapping(value = "/updateReview.do", method = RequestMethod.GET)
 	public String updateView(ReviewVO vo,Model model) {
 		System.out.println("updateView : "+vo.getReviewNum());
 		model.addAttribute("review",reviewService.getReview(vo));
-		
-		
-		
 		return "updateReview";
 	}
+	
+	// 후기 수정
 	@RequestMapping(value = "/updateReview.do", method = RequestMethod.POST)
-	public String update(ReviewVO vo, HttpServletRequest req, MultipartFile file) throws Exception {
+	public String update(ReviewVO vo, MultipartHttpServletRequest req) throws Exception {
+		
+		String m_writer = req.getParameter("m_writer");
+		String m_title = req.getParameter("m_title");
+		String m_content = req.getParameter("m_content");
+		
+		if (!m_writer.isEmpty()) {
+			vo.setWriter(m_writer);
+		}
+		if (!m_title.isEmpty()) {
+			vo.setTitle(m_title);
+		}
+		if (!m_content.isEmpty()) {
+			vo.setContent(m_content);
+		}
+		
+		List<MultipartFile> fileList = req.getFiles("file");
+		
 		uploadPath = req.getSession().getServletContext().getRealPath("/resources");
 		System.out.println("업로드 패스 : "+uploadPath);
 		
-		String imgUploadPath = uploadPath + File.separator + "imgUpload";
-		String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
-		String fileName = null;
+		for (MultipartFile file : fileList) {
+			String imgUploadPath = uploadPath + File.separator + "imgUpload";
+			String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
+			String fileName = null;
 		
-		if(file != null) {
-			 fileName =  UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath); 
-			} else {
-			 fileName = uploadPath + File.separator + "images" + File.separator + "none.png";
-			}
-		//패스 추가
-		vo.setContent_img("imgUpload" + ymdPath + File.separator + fileName);
-		System.out.println("setUser_img :"+vo.getContent_img());
-		
+			if(!file.isEmpty()) {
+				fileName =  UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath);
+				vo.setContent_img(".." + File.separator + "imgUpload" + ymdPath + File.separator + fileName);
+				break;
+			} 
+			vo.setContent_img(vo.getContent_img());
+		}
 		
 		reviewService.update(vo);
 		return "redirect:getReviewList.do";
 	}
-	//
 	
 	// 후기 삭제
 	@RequestMapping("/deleteReview.do")
@@ -133,6 +156,7 @@ public class ReviewController {
 		vo =reviewService.getReview(vo);
 		System.out.println(vo.getReviewNum());
 		System.out.println(vo.getContent());
+
 		return "review";
 	}
 	

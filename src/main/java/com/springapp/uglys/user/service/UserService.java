@@ -19,4 +19,7 @@ public interface UserService {
 	// 회원 정보 보기
 	public UserVO selectUser(UserVO vo);
 	
+	// 중복체크
+	public int checkUser(UserVO vo);
+	
 }

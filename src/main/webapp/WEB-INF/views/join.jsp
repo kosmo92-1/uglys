@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -33,7 +34,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- import JS -->
-<script src="${pageContext.request.contextPath}/resources/js/form.js"></script>
+<!-- 에러로 주석처리함 -->
+<%-- <script src="${pageContext.request.contextPath}/resources/js/form.js"></script> --%>
 
 <title>UGLYS</title>
 </head>
@@ -55,12 +57,12 @@
 						<td>
                             <div class="form-check-inline">
                                 <input type="radio" id="user" class="form-check-input"
-                                    name="user_admin" value="user" checked> <label
+                                    name="user_admin" value="일반" checked> <label
                                     for="user" class="form-check-label"> 사용자 </label>
                             </div>
                             <div class="form-check-inline">
                                 <input type="radio" id="admin" class="form-check-input"
-                                    name="user_admin" value="admin"> <label for="admin"
+                                    name="user_admin" value="관리자"> <label for="admin"
                                     class="form-check-label"> 관리자 </label>
                             </div>
                         </td>
@@ -68,7 +70,11 @@
 					<tr>
 						<th>아이디<b>*</b></th>
 						<td class="input-group-sm"><input type="text" id="id"
-							class="form-control" name="user_id"></td>
+							class="form-control" name="user_id">
+							<c:if test="${already eq false}">
+								<p>중복된 아이디입니다.</p>
+							</c:if>
+							</td>
 					</tr>
 					<tr>
 						<th>비밀번호<b>*</b></th>
@@ -125,7 +131,7 @@
 		                    <div class="select_img img" ><img src=""></div>
 		                        <input class="form-control" type="file" id="user_img" name="file">
 		                    <div class="col-md-6">
-		                        <input type="hidden" id="userImage" name="userImage" required>
+		                       <!--  <input type="hidden" id="userImage" name="userImage" required> -->
 		                    </div>
                				</div>
         					<script>
@@ -149,49 +155,54 @@
 				<!-- PC ver START -->
 
 				<!-- Mobile ver START-->
-				<!--   <div class="mb">
+				   <div class="mb">
                     <div class="toggle-box form-check form-switch mb-3">
-                        <input type="checkbox" class="form-check-input" role="switch" id="userType">
+                        <input type="checkbox" class="form-check-input" role="switch" id="userType" >
+                        <input type="hidden" name="m_user_admin" value="일반">
                         <label for="userType" class="label-toggle form-check-label">관리자로 가입하기</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" id="idMb" class="form-control" placeholder="아이디">
+                        <input type="text" id="idMb" name="m_user_id" class="form-control" placeholder="아이디">
                         <label for="idMb">아이디</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="password" id="passwordMb" class="form-control" placeholder="비밀번호">
+                        <input type="password" id="passwordMb" name="m_user_password" class="form-control" placeholder="비밀번호">
                         <label for="passwordMb">비밀번호</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="email" id="emailMb" class="form-control" placeholder="이메일">
+                        <input type="email" id="emailMb" name="m_user_email" class="form-control" placeholder="이메일">
                         <label for="emailMb">이메일</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" id="nameMb" class="form-control" placeholder="이름">
+                        <input type="text" id="nameMb" name="m_user_name" class="form-control" placeholder="이름">
                         <label for="nameMb">이름</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" id="birthdayMb" class="form-control" placeholder="생년월일">
+                        <input type="text" id="birthdayMb"  name="m_user_birth" class="form-control" placeholder="생년월일">
                         <label for="birthdayMb">생년월일</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" id="phoneNumMb" class="form-control" placeholder="-를 제외하고 입력해주세요">
+                        <input type="text" id="phoneNumMb" name="m_user_phone" class="form-control" placeholder="-를 제외하고 입력해주세요">
                         <label for="phoneNumMb" >휴대폰 번호</label>
                     </div>
                     <div class="mb-3">
                         <div class="input-group mb-2">
-                            <input type="text" id="user_Basic_Address-mb" class="form-control p-3" placeholder="주소"
-                                disabled="disabled">
+                            <input type="text" id="user_Basic_Address-mb" name="m_user_basic_address" class="form-control p-3" placeholder="주소"
+                                readonly="readonly">
                             <label for="addressMb" class="sr-only">주소</label>
                             <button type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal"
                                 data-bs-target="#searchPost" onclick="execDaumPostcode()"><b>검색</b></button>
                         </div>
                         <div class="input-group">
-                            <input type="text" id="user_Detail_Address-mb" class="form-control p-3" placeholder="상세주소">
+                            <input type="text" id="user_Detail_Address-mb" name="m_user_detail_address" class="form-control p-3" placeholder="상세주소">
                             <label for="address2Mb" class="sr-only">상세주소</label>
                         </div>
                     </div>
-                </div> -->
+                    <div class="form-floating mb-3">
+                        <input type="file" id="m_user_img" name="file" >
+                        <label>프로필사진</label>
+                    </div>
+                </div> 
 				<!-- Mobile ver END-->
 
 				<!-- 주소검색 모달 -->
@@ -321,7 +332,8 @@
 		crossorigin="anonymous"></script>
 	<script
 		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/myPage.js"></script>
+		<!-- 에러로 주석처리 -->
+	<%-- <script src="${pageContext.request.contextPath}/resources/js/myPage.js"></script> --%>
 </body>
 
 </html>

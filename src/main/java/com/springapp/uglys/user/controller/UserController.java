@@ -3,7 +3,6 @@ package com.springapp.uglys.user.controller;
 import java.io.File;
 import java.io.PrintWriter;
 
-import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +21,7 @@ import com.springapp.uglys.user.service.UserService;
 import com.springapp.uglys.user.vo.UserVO;
 import com.springapp.uglys.utils.DeleteFileUtils;
 import com.springapp.uglys.utils.UploadFileUtils;
+
 
 /**
  * Handles requests for the application home page.
@@ -76,7 +76,6 @@ public class UserController {
 		logger.info("logout");
 
 		session.invalidate();
-		
 		return "redirect:/";
 	}
 	
@@ -89,36 +88,72 @@ public class UserController {
 	}
 	
 	// 회원가입 post
-	@RequestMapping(value = "/insertUser", method = RequestMethod.POST)
-	public String postInsertUser(UserVO vo,HttpServletRequest req, MultipartFile file,HttpServletResponse response) throws Exception {
-		logger.info("post insert");
-		System.out.println("vo : "+vo.getUser_admin());
-		uploadPath = req.getSession().getServletContext().getRealPath("/resources");
-		System.out.println("업로드 패스 : "+uploadPath);
-		
-		String imgUploadPath = uploadPath + File.separator + "imgUpload";
-		String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
-		String fileName = null;
+		@RequestMapping(value = "/insertUser", method = RequestMethod.POST)
+		public String postInsertUser(UserVO vo,HttpServletRequest req,RedirectAttributes rttr,HttpServletResponse response,MultipartFile file) throws Exception {
+			logger.info("post insert");
+			System.out.println("이미지"+vo.getUser_img());
+			String imgUploadPath = uploadPath + File.separator + "imgUpload";
+			String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
+			String fileName = null;
+			// 아이디 중복체크
+			// 아이디에 해당하는 정보를 불러옴
+			int idChk =service.checkUser(vo);
+			
+			// 중복값이 있으면
+			
+			if(idChk==1) {
+				System.out.println("아이디 중복");
+				rttr.addFlashAttribute("already", false);
+				return "redirect:insertUser";
+			}
 
-		if(file != null) {
-		 fileName =  UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath); 
-		} else {
-		 fileName = uploadPath + File.separator + "images" + File.separator + "none.png";
+		
+			uploadPath = req.getSession().getServletContext().getRealPath("/resources");
+			// 모바일 버전 변수
+			String m_user_admin = req.getParameter("m_user_admin");
+			String m_user_id = req.getParameter("m_user_id");
+			String m_user_password = req.getParameter("m_user_password");
+			String m_user_email = req.getParameter("m_user_email");
+			String m_user_name = req.getParameter("m_user_name");
+			String m_user_birth = req.getParameter("m_user_birth");
+			String m_user_phone = req.getParameter("m_user_phone");
+			String m_user_basic_address = req.getParameter("m_user_basic_address");
+			String m_user_detail_address = req.getParameter("m_user_detail_address");
+			String m_user_img= req.getParameter("m_user_img");
+					
+			if(m_user_admin.isEmpty() ) {
+				vo.setUser_admin(m_user_admin);
+				vo.setUser_id(m_user_id);
+				vo.setUser_password(m_user_password);
+				vo.setUser_email(m_user_email);
+				vo.setUser_name(m_user_name);
+				vo.setUser_birth(m_user_birth);
+				vo.setUser_phone(m_user_phone);
+				vo.setUser_basic_address(m_user_basic_address);
+				vo.setUser_detail_address(m_user_detail_address);
+				vo.setUser_img(m_user_img);
+			}
+			
+		
+			// 파일이 있다면
+			if(!file.isEmpty()) {
+				 fileName =  UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes(), ymdPath); 
+				 vo.setUser_img(".."+File.separator + "imgUpload" + ymdPath + File.separator + fileName);
+			}else {
+				vo.setUser_img("");
+			}
+			
+			service.insertUser(vo);
+			
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('가입을 환영합니다.');</script>");
+			out.flush();
+
+			return "login";
+			
+		
 		}
-		//패스 추가
-		vo.setUser_img(".."+File.separator + "imgUpload" + ymdPath + File.separator + fileName);
-		System.out.println("setUser_img :"+vo.getUser_img());
-		service.insertUser(vo);
-		
-		response.setContentType("text/html; charset=utf-8");
-		PrintWriter out = response.getWriter();
-		out.println("<script>alert('가입을 환영합니다.');</script>");
-		out.flush();
-
-		return "login";
-
-
-	}
 	// 회원 정보  뷰페이지
 	@RequestMapping(value="/userUpdateView", method = RequestMethod.GET)
 	public String userUpdateView(HttpSession session,Model model,HttpServletResponse response) throws Exception{

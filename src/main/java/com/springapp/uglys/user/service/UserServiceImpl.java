@@ -38,4 +38,10 @@ public class UserServiceImpl implements UserService{
 	public UserVO selectUser(UserVO vo) {
 		return dao.selectUser(vo);
 	}
+
+	@Override
+	public int checkUser(UserVO vo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
