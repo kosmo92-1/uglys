@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -44,8 +45,25 @@
 						어글리스에서는 못생겼지만 맛이 좋은 야채들을<br> 소비자가격 대비 <strong>10~40%</strong>나
 						저렴하게 판매하고 있습니다.
 					</p>
-					<a href="user/insertUser" class="btn btn-green">시작하기</a>
-				</div>
+									<c:choose>
+					<c:when test="${empty user }">
+						<a href="user/login" class="btn btn-green">시작하기</a>
+					</c:when>
+					<c:otherwise>
+						<button type="button" class="btn btn-green"
+						data-bs-toggle="modal" data-bs-target="#paymodule">시작하기
+						</button>
+								<div class="modal fade" id="paymodule">
+			          <div class="modal-dialog" >
+			            <div class="modal-content">
+			                <img src="${pageContext.request.contextPath}/resources/img/paymodule.jpg">
+			            </div><!-- /.modal-content -->
+			          </div><!-- /.modal-dialog -->
+			        </div><!-- /.modal -->
+					</c:otherwise>
+				</c:choose>
+			
+					
 			</section>
 			<section class="sec-pros">
 				<div class="pros1">
@@ -134,13 +152,21 @@
 					농산물의 폐기는 지구온난화의 원인이 되고 물, 비료, 노동 등의 에너지의 낭비로 이어집니다.<br> 건강한
 					식탁과 지속가능한 환경을 위해 함께 해주세요.
 				</p>
-				<a href="user/insertUser" class="btn">시작하기</a>
+				<c:choose>
+					<c:when test="${empty user }">
+						<a href="user/login" class="btn">시작하기</a>
+					</c:when>
+					<c:otherwise>
+						<a href="user/insertUser" class="btn">시작하기</a>
+					</c:otherwise>
+				</c:choose>
 			</section>
 		</main>
 
 		<!-- FOOTER -->
 		<jsp:include page="module/footer.jsp" />
 	</div>
+
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
