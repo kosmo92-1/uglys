@@ -25,7 +25,7 @@
 				<c:choose>
 				    <c:when test="${empty content_img}">
 				    	<!-- 기본이미지 넣어주세요 -->
-				        <img src="${pageContext.request.contextPath}/resources/img/review/#" alt="">
+				        <img src="${pageContext.request.contextPath}/resources/img/logo.png" alt="">
 				    </c:when>
 				    <c:otherwise>
 					    <img src="${review.content_img }" alt="" >
