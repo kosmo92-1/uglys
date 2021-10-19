@@ -74,9 +74,7 @@
                     <form action="userDelete" method="post">
                     <input type="text"name="user_id" value="${user.user_id }"><br>
                     <input type="password"name="user_password">
-                    <c:if test="${fail == false }">
-                		<p style="color: red;">비밀 번호를 확인해 주세요.</p>
-            		</c:if>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-dark" data-bs-dismiss="modal">취소</button>
                           <button type="submit" class="btn btn-green">탈퇴하기</button>
@@ -92,7 +90,9 @@
             <h3>회원정보 변경</h3>
             
             <button type="button" class="btn btn-sm btn-green"  data-bs-toggle="modal" data-bs-target="#leaveModal" id="leaveBtn">회원 탈퇴</button>
-            
+            <c:if test="${fail == false }">
+               <p style="color: red;">비밀 번호를 확인해 주세요.</p>
+           	</c:if>
             <form action="">
                 <!-- PC ver START -->
                 <table class="pc">
