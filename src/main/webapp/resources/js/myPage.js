@@ -112,7 +112,6 @@
             // iframe을 넣은 element를 보이게 한다.
             element_wrap.style.display = "block";
         }
-
         //id 입력제한 특수문자
         var replaceId  = /[<>()]/gi;
     

@@ -51,7 +51,7 @@
                         <div class="form-group">
 		                    <label class="control-label col-md-2"><b></b></label>
 		                    <div class="select_img img" >
-		                    	<c:set var="content_img" value="${reviewVO.content_img }" />
+		                    	<c:set var="content_img" value="${review.content_img }" />
 								<c:choose>
 								    <c:when test="${empty content_img}">
 								    	<!-- 기본이미지 넣어주세요 -->
