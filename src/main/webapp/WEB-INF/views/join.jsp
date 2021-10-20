@@ -129,13 +129,13 @@
 							<div class="form-group">
 		                    <label class="control-label col-md-2"><b>사진</b></label>
 		                    <div class="select_img img" ><img src=""></div>
-		                        <input class="form-control" type="file" id="file" name="file">
+		                        <input class="form-control" type="file" id="userImg" name="file">
 		                    <div class="col-md-6">
 		                       <!--  <input type="hidden" id="userImage" name="userImage" required> -->
 		                    </div>
                				</div>
         					<script>
-								  $("#user_img").change(function(){
+								  $("#userImg").change(function(){
 								   if(this.files && this.files[0]) {
 								    var reader = new FileReader;
 								    reader.onload = function(data) {

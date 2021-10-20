@@ -229,3 +229,23 @@
             
     
         });
+        
+        // 미리보기 이미지
+        $("#user_img")
+		.change(
+				function() {
+					if (this.files
+							&& this.files[0]) {
+						var reader = new FileReader;
+						reader.onload = function(
+								data) {
+							$(".select_img img")
+									.attr(
+											"src",
+											data.target.result)
+									.width(100);
+						}
+						reader
+								.readAsDataURL(this.files[0]);
+					}
+				});

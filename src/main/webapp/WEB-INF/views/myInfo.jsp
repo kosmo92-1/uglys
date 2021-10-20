@@ -119,33 +119,34 @@
 					<tr>
 						<th>아이디<b>*</b></th>
 						<td class="input-group-sm"><input type="text" id="id"
-							class="form-control" value="${user.user_id}" readonly="readonly"></td>
+							class="form-control" value="${user.user_id}" name="user_id"
+							readonly="readonly"></td>
 					</tr>
 					<tr>
 						<th>비밀번호<b>*</b></th>
 						<td class="input-group-sm"><input type="password"
-							id="password" class="form-control" value="${user.user_password }">
-						</td>
+							id="password" name="user_password" class="form-control"
+							value="${user.user_password }"></td>
 					</tr>
 					<tr>
 						<th>이메일<b>*</b></th>
 						<td class="input-group-sm"><input type="email" id="email"
-							class="form-control" value="${user.user_email}"></td>
+							name="user_email" class="form-control" value="${user.user_email}"></td>
 					</tr>
 					<tr>
 						<th>이름<b>*</b></th>
 						<td class="input-group-sm"><input type="text" id="name"
-							class="form-control" value="${user.user_name}"></td>
+							name="user_name" class="form-control" value="${user.user_name}"></td>
 					</tr>
 					<tr>
 						<th>생년월일<b>*</b></th>
 						<td class="input-group-sm"><input type="text" id="birthday"
-							class="form-control" value="${user.user_birth}"></td>
+							name="user_birth" class="form-control" value="${user.user_birth}"></td>
 					</tr>
 					<tr>
 						<th>휴대폰 번호<b>*</b></th>
 						<td class="input-group-sm"><input type="tel" id="phoneNum"
-							class="form-control" value="${user.user_phone}"></td>
+							name="user_phone" class="form-control" value="${user.user_phone}"></td>
 					</tr>
 					<tr>
 						<th>주소<b>*</b></th>
@@ -161,7 +162,8 @@
 
 							<div class="input-group mb-2">
 								<input class="form-control" type="text" id="user_Basic_Address"
-									disabled="disabled" value="${user.user_basic_address}" />
+									name="user_basic_address" readonly="readonly"
+									value="${user.user_basic_address}" />
 								<button type="button" class="btn btn-sm btn-dark"
 									data-bs-toggle="modal" data-bs-target="#searchPost"
 									onclick="execDaumPostcode()">
@@ -169,7 +171,8 @@
 								</button>
 							</div>
 							<div class="input-group">
-								<input type="text" id="user_Detail_Address" class="form-control">
+								<input type="text" id="user_Detail_Address"
+									name="user_detail_address" class="form-control">
 							</div>
 						</td>
 					</tr>
@@ -178,14 +181,31 @@
 						<td>
 							<div class="form-group">
 								<div class="select_img img">
-									<img src="${user.user_img }">
+									<img src="${user.user_img }" width="100">
 								</div>
 								<input class="form-control" type="file" id="userImg" name="file">
-								<!--  
-		                    <div class="col-md-6">
-		                        <input type="hidden" id="userImage" name="userImage" required="required">
-		                    </div>
-		                    -->
+								<script>
+									$("#userImg")
+											.change(
+													function() {
+														if (this.files
+																&& this.files[0]) {
+															var reader = new FileReader;
+															reader.onload = function(
+																	data) {
+																$(
+																		".select_img img")
+																		.attr(
+																				"src",
+																				data.target.result)
+																		.width(
+																				100);
+															}
+															reader
+																	.readAsDataURL(this.files[0]);
+														}
+													});
+								</script>
 							</div>
 
 						</td>
@@ -221,7 +241,8 @@
 					</c:if>
 					<div class="form-floating mb-3">
 						<input type="text" id="idMb" class="form-control" name="m_user_id"
-							value="${user.user_id}" readonly="readonly"> <label for="idMb">아이디</label>
+							value="${user.user_id}" readonly="readonly"> <label
+							for="idMb">아이디</label>
 					</div>
 					<div class="form-floating mb-3">
 						<input type="password" id="passwordMb" class="form-control"
@@ -257,8 +278,8 @@
 						</div>
 						<div class="input-group">
 							<input type="text" id="address2Mb" class="form-control p-3"
-								name="m_user_detail_address" value="${user.user_detail_address}"> <label for="address2Mb"
-								class="sr-only">상세주소</label>
+								name="m_user_detail_address" value="${user.user_detail_address}">
+							<label for="address2Mb" class="sr-only">상세주소</label>
 						</div>
 					</div>
 					<div class="form-floating mb-3">
@@ -270,19 +291,20 @@
 								name="m_user_img">
 						</div>
 					</div>
-					</div>
-					<!-- Mobile ver END-->
 				</div>
+				<!-- Mobile ver END-->
+		
 				<div class="text-center">
 					<button type="submit" class="btn-save btn btn-lg btn-green"
 						id="saveBtn">저장</button>
-					<a class="btn-cancel btn btn-lg btn-light" id="cancelBtn" href="/uglys">취소</a>
+					<a class="btn-cancel btn btn-lg btn-light" id="cancelBtn"
+						href="/uglys">취소</a>
 				</div>
 			</form>
 		</div>
+		<jsp:include page="module/footer.jsp" />
 	</div>
-
-	<jsp:include page="module/footer.jsp" />
+	
 	<script>
 		function submitAction(event) {
 			if (window.matchMedia('(min-width: 768px)').matches) {
@@ -309,6 +331,7 @@
 			}
 		}
 	</script>
+	
 	<script src="/uglys/resources/js/myPage.js"></script>
 </body>
 
