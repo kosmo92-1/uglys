@@ -45,21 +45,28 @@
 						어글리스에서는 못생겼지만 맛이 좋은 야채들을<br> 소비자가격 대비 <strong>10~40%</strong>나
 						저렴하게 판매하고 있습니다.
 					</p>
-									<c:choose>
+					<c:choose>
 					<c:when test="${empty user }">
 						<a href="user/login" class="btn btn-green">시작하기</a>
 					</c:when>
 					<c:otherwise>
-						<button type="button" class="btn btn-green"
-						data-bs-toggle="modal" data-bs-target="#paymodule">시작하기
+						<!-- Trigger -->
+						<button type="button" class="btn btn-green" data-bs-toggle="modal" data-bs-target="#paymodule" data-bs-backdrop="false">시작하기
 						</button>
-								<div class="modal fade" id="paymodule">
-			          <div class="modal-dialog" >
-			            <div class="modal-content">
-			                <img src="${pageContext.request.contextPath}/resources/img/paymodule.jpg">
-			            </div><!-- /.modal-content -->
-			          </div><!-- /.modal-dialog -->
-			        </div><!-- /.modal -->
+						<div class="modal fade" id="paymodule">
+			          		<div class="modal-dialog">
+			           			 <div class="modal-content">
+							  	<div class="modal-header">
+								  	<button type="button" class="close" data-dismiss="modal" aria-label="close">
+								  </div>
+								  <div class="modal-body">
+								  	<div>
+			                		<img src="${pageContext.request.contextPath}/resources/img/paymodule.jpg">
+								  	</div>
+								  </div>
+			            		</div><!-- /.modal-content -->
+			        		</div><!-- /.modal-dialog -->
+			       		 </div><!-- /.modal -->
 					</c:otherwise>
 				</c:choose>
 			
